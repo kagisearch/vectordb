@@ -1,13 +1,13 @@
-# PyMemory
+# VectorDB
 
-PyMemory is a Python package for storing and retrieving text using chunking, embedding, and vector search techniques. It provides an easy-to-use interface for saving, searching, and managing textual data with associated metadata.
+VectorDB is a minimal Python package for storing and retrieving text using chunking, embedding, and vector search techniques. It provides an easy-to-use interface for saving, searching, and managing textual data with associated metadata.
 
 ## Installation
 
-To install PyMemory, use pip:
+To install VectorDB, use pip:
 
 ```
-pip install pymemory
+pip install vectordb2
 ```
 
 ## Usage
