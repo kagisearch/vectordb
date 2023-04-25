@@ -15,7 +15,7 @@ pip install vectordb2
 Here's a quick example of how to use PyMemory:
 
 ```
-from vectordb2 import Memory
+from vectordb import Memory
 
 memory = Memory()
 
@@ -72,7 +72,7 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 ## Example
 
 ```
-from vectordb2 import Memory
+from vectordb import Memory
 
 memory = Memory(chunking_strategy={'mode':'sliding_window', 'window_size': 128, 'overlap': 16})
 
