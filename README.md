@@ -45,7 +45,7 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
    Options::
 	{'mode':'sliding_window', 'window_size': 256, 'overlap': 32}
 	{'mode':'paragraph'}
-- **embedding_model** (str): Name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2").
+- **embedding_model** (str): Name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2"). See [Pretrained models](https://www.sbert.net/docs/pretrained_models.html).
 
 **save(self, texts, metadata_list, memory_file=None)**
 
