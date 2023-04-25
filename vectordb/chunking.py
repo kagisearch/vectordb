@@ -41,9 +41,13 @@ class Chunker:
         :param text: a string containing the text to be chunked.
         :return: a list of paragraphs extracted from the input text.
         """
-        text = self.clean_text(text)
         paragraphs = text.split("\n\n")
-        return [p.strip() for p in paragraphs if p.strip()]
+        cleaned_paragraphs = []
+        for p in paragraphs:
+            cleaned_p = self.clean_text(p)
+            if cleaned_p:
+                cleaned_paragraphs.append(cleaned_p)
+        return cleaned_paragraphs
 
     def sliding_window_chunking(self, text: str) -> List[str]:
         """
