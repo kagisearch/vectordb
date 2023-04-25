@@ -17,7 +17,10 @@ Here's a quick example of how to use PyMemory:
 ```
 from vectordb2 import Memory
 
-memory = Memory(chunking_strategy={'mode':"sliding_window"})
+memory = Memory()
+
+# text = "..."
+# metadata = {...}
 
 # Save text with metadata
 memory.save(text, metadata)
@@ -35,7 +38,7 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 
 
 - Initializes the Memory class.
-- **memory_file** (str): Path to the memory file (default: None). If provided, memory will persist to disk
+- **memory_file** (str): Path to the memory file (default: None). If provided, memory will persist to disk.
 - **chunking_strategy** (dict): Dictionary containing the chunking mode (default: {"mode": "sliding_window"})
    Options::
 	{'mode':'sliding_window', 'window_size': 256, 'overlap': 32}
@@ -69,7 +72,7 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 ## Example
 
 ```
-from pymemory import Memory
+from vectordb2 import Memory
 
 memory = Memory(chunking_strategy={'mode':"sliding_window"})
 
