@@ -74,14 +74,7 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 ```
 from vectordb2 import Memory
 
-memory = Memory(chunking_strategy={'mode':"sliding_window"})
-
-text = """
-Machine learning is a method of data analysis that automates analytical model building.
-...
-from pymemory import Memory
-
-memory = Memory(chunking_strategy={'mode':"sliding_window"})
+memory = Memory(chunking_strategy={'mode':'sliding_window', 'window_size': 128, 'overlap': 16})
 
 text = """
 Machine learning is a method of data analysis that automates analytical model building.
@@ -143,13 +136,43 @@ metadata2 = {"title": "Introduction to Artificial Intelligence", "url": "https:/
 
 memory.save(text2, metadata2)
 
-
 query = "What is the relationship between AI and machine learning?"
 
 results = memory.search(query, top_n=3)
 
 print(results)
 ```
+
+Output:
+```
+[
+  {
+    'chunk': 'Machine learning is a method of data analysis that automates analytical model building . It is a branch of artificial intelligence based on the idea that systems can learn from data , identify patterns and make decisions with minimal human intervention . Machine learning algorithms are trained on data sets that contain examples of the desired output . For example , a machine learning algorithm that is used to classify images might be trained on a data set that contains images of cats and dogs . Once an algorithm is trained , it can be used to make predictions on new data . For example , the machine learning algorithm that is used to classify images could be used to predict whether a new image contains a cat', 
+    'metadata': 
+    {
+      'title': 'Introduction to Machine Learning', 
+      'url': 'https://example.com/introduction-to-machine-learning'
+    }
+  }, 
+  {
+    'chunk': 'Artificial intelligence ( AI ) is the simulation of human intelligence in machines that are programmed to think like humans and mimic their actions . The term may also be applied to any machine that exhibits traits associated with a human mind such as learning and problem - solving . AI research has been highly successful in developing effective techniques for solving a wide range of problems , from game playing to medical diagnosis . However , there is still a long way to go before AI can truly match the intelligence of humans . One of the main challenges is that human intelligence is incredibly complex and poorly understood . Despite the challenges , AI is a rapidly growing field with the potential to revolutionize many aspects', 
+    'metadata': 
+    {
+      'title': 'Introduction to Artificial Intelligence', 
+      'url': 'https://example.com/introduction-to-artificial-intelligence'
+    }
+  }, 
+  {
+    'chunk': 'are also potential risks associated with AI , such as : Job displacement : As AI becomes more capable , it is possible that it will displace some human workers . Weaponization : AI could be used to develop new weapons that are more powerful and destructive than anything we have today . Loss of control : If AI becomes too powerful , we may lose control over it , with potentially disastrous consequences . It is important to weigh the potential benefits and risks of AI carefully as we continue to develop this technology . With careful planning and oversight , AI has the potential to make the world a better place . However , if we are not careful , it could also lead to serious', 
+    'metadata': 
+    {
+      'title': 'Introduction to Artificial Intelligence', 
+      'url': 'https://example.com/introduction-to-artificial-intelligence'
+    }
+  }
+]
+```
+
 
 ## License
 
