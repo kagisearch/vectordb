@@ -12,7 +12,7 @@ pip install vectordb2
 
 ## Usage
 
-Here's a quick example of how to use PyMemory:
+Here's a quick example of how to use VectorDB:
 
 ```
 from vectordb import Memory
