@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="vectordb2",
-    version="0.1.0",
+    version="0.1.2",
     packages=find_packages(),
     install_requires=[
         "torch>=1.9.0",
@@ -11,12 +11,13 @@ setup(
         "scikit-learn>=0.24.0",
         "scipy>=1.7.0",
         "sentence_transformers",
+        "faiss-cpu",
     ],
-    author="Your Name",
-    author_email="your.email@example.com",
-    description="A Python package for storing and retrieving text using chunking, embedding, and vector search",
+    author="Vladimir Prelovac",
+    author_email="vlad@kagi.com",
+    description="A lightweight Python package for storing and retrieving text using chunking, embedding, and vector search",
     keywords="text chunking embedding vector search",
-    url="https://github.com/yourusername/pymemory",
+    url="https://github.com/kagisearch/vectordb",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
