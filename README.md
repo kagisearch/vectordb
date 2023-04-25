@@ -1,6 +1,8 @@
 # VectorDB
 
-VectorDB is a minimal Python package for storing and retrieving text using chunking, embedding, and vector search techniques. It provides an easy-to-use interface for saving, searching, and managing textual data with associated metadata.
+[![](https://dcbadge.vercel.app/api/server/aDNg6E9szy?compact=true&style=flat)](https://discord.gg/aDNg6E9szy) [![Twitter](https://img.shields.io/twitter/follow/KagiHQ?style=social)](https://twitter.com/KagiHQ) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/license/mit/) 
+
+VectorDB is a lightweight Python package for storing and retrieving text using chunking, embedding, and vector search techniques. It provides an easy-to-use interface for saving, searching, and managing textual data with associated metadata.
 
 ## Installation
 
@@ -12,7 +14,7 @@ pip install vectordb2
 
 ## Usage
 
-Here's a quick example of how to use PyMemory:
+Here's a quick example of how to use VectorDB:
 
 ```
 from vectordb import Memory
@@ -43,7 +45,7 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
    Options::
 	{'mode':'sliding_window', 'window_size': 256, 'overlap': 32}
 	{'mode':'paragraph'}
-- **embedding_model** (str): Name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2").
+- **embedding_model** (str): Name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2"). See [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
 
 **save(self, texts, metadata_list, memory_file=None)**
 
