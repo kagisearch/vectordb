@@ -6,7 +6,7 @@ VectorDB is a lightweight Python package for storing and retrieving text using c
 
 ## Installation
 
-To install VectorDB, use pip:
+To install VectorDB, use pip (note vectordb2 package name):
 
 ```
 pip install vectordb2
