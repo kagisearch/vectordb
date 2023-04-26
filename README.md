@@ -47,11 +47,11 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 	{'mode':'paragraph'}
 - **embedding_model** (str): Name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2"). See [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
 
-**save(texts, meta, memory_file=None)**
+**save(texts, metadata, memory_file=None)**
 
 - Saves the given texts and metadata to memory.
 - **texts** (str or list of str): Text or list of texts to be saved.
-- **meta** (dict or list of dict): Metadata or list of metadata associated with the texts.
+- **metdata** (dict or list of dict): Metadata or list of metadata associated with the texts.
 - **memory_file** (str): Path to the memory file (default: None).
 
 **search(self, query, top_n=5)**
