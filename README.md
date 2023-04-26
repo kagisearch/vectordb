@@ -177,7 +177,7 @@ Output:
 
 ## Vector search performance
 
-VectorDB is optimized for speed of retrieveal and uses Faiss for low number of items (<4000) and mrpt for high number of chunks.
+VectorDB is optimized for speed of retrieval and uses [Faiss](https://github.com/facebookresearch/faiss) for low number of chunks (<4000) and [mrpt](https://github.com/vioshyvo/mrpt) for high number of chunks to ensure maximum performance across the spectrum of use cases.
 
 ![Vector search engine comparison](images/comparison.png)
 
