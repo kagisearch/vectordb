@@ -27,29 +27,29 @@ class Memory:
         self.embedder = Embedder(embedding_model)
         self.vector_search = VectorSearch()
 
-    def save(self, texts, metadata_list, memory_file: str = None):
+    def save(self, texts, metadata, memory_file: str = None):
         """
         Saves the given texts and metadata to memory.
 
         :param texts: a string or a list of strings containing the texts to be saved.
-        :param metadata_list: a dictionary or a list of dictionaries containing the metadata associated with the texts.
+        :param metadata: a dictionary or a list of dictionaries containing the metadata associated with the texts.
         :param memory_file: a string containing the path to the memory file. (default: None)
         """
         if not isinstance(texts, list):
             texts = [texts]
-        if not isinstance(metadata_list, list):
-            metadata_list = [metadata_list]
+        if not isinstance(metadata, list):
+            metadata = [metadata]
 
         if memory_file is None:
             memory_file = self.memory_file
-        for text, metadata in zip(texts, metadata_list):
+        for text, meta in zip(texts, metadata):
             chunks = self.chunker.strategy(text)
             embeddings = self.embedder.embed_text(chunks)
             for chunk, embedding in zip(chunks, embeddings):
                 entry = {
                     "chunk": chunk,
                     "embedding": embedding.tolist(),
-                    "metadata": metadata,
+                    "metadata": meta,
                 }
                 self.memory.append(entry)
         if memory_file is not None:
