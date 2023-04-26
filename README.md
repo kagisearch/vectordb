@@ -35,7 +35,7 @@ results = memory.search(query, top_n=3)
 Memory provides the following methods:
 
 
-**__init__(self, memory_file=None, chunking_strategy={"mode":"sliding_window"},
+**__init__(memory_file=None, chunking_strategy={"mode":"sliding_window"},
 embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 
 
@@ -47,11 +47,11 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 	{'mode':'paragraph'}
 - **embedding_model** (str): Name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2"). See [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
 
-**save(self, texts, metadata_list, memory_file=None)**
+**save(texts, meta, memory_file=None)**
 
 - Saves the given texts and metadata to memory.
 - **texts** (str or list of str): Text or list of texts to be saved.
-- **metadata_list** (dict or list of dict): Metadata or list of metadata associated with the texts.
+- **meta** (dict or list of dict): Metadata or list of metadata associated with the texts.
 - **memory_file** (str): Path to the memory file (default: None).
 
 **search(self, query, top_n=5)**
