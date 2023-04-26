@@ -40,7 +40,7 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 
 
 - Initializes the Memory class.
-- **memory_file** (str): Path to the memory file (default: None). If provided, memory will persist to disk.
+- **memory_file** (str): Path to the memory file (default: None). If provided, memory will persist to disk and loaded/saved to this file. save() will automatically use the provided memory_file.
 - **chunking_strategy** (dict): Dictionary containing the chunking mode (default: {"mode": "sliding_window"})\
    Options:\
 	{'mode':'sliding_window', 'window_size': 256, 'overlap': 32}\
