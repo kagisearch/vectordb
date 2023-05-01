@@ -25,9 +25,11 @@ memory = Memory()
 # metadata = {...}
 
 # Save text with metadata
+# This will automatically embed content
 memory.save(text, metadata)
 
-# Search for relevant chunks
+# Search for top n relevant chunks
+# We will automatically use the fastest vector search backend
 results = memory.search(query, top_n=3)
 ```
 
