@@ -1,3 +1,9 @@
+"""
+This module provides the Memory class that represents a memory storage system
+for text and associated metadata, with functionality for saving, searching, and
+managing memory entries.
+"""
+
 from typing import List, Dict, Any
 from .chunking import Chunker
 from .embedding import Embedder
@@ -6,10 +12,15 @@ from .storage import Storage
 
 
 class Memory:
+    """
+    Memory class represents a memory storage system for text and associated metadata.
+    It provides functionality for saving, searching, and managing memory entries.
+    """
+
     def __init__(
         self,
         memory_file: str = None,
-        chunking_strategy: dict = {"mode": "sliding_window"},
+        chunking_strategy: dict = None,
         embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2",
     ):
         """
@@ -23,9 +34,12 @@ class Memory:
         self.memory = (
             [] if memory_file is None else Storage(memory_file).load_from_disk()
         )
+        if chunking_strategy is None:
+            chunking_strategy = {"mode": "sliding_window"}
         self.chunker = Chunker(chunking_strategy)
         self.embedder = Embedder(embedding_model)
         self.vector_search = VectorSearch()
+
 
     def save(self, texts, metadata_list, memory_file: str = None):
         """

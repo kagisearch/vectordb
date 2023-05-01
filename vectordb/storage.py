@@ -4,6 +4,10 @@ import os
 
 
 class Storage:
+    """
+    A class to handle saving and loading data to and from a memory file.
+    """
+
     def __init__(self, memory_file: str = "long_memory.pkl"):
         """
         Initializes the Storage with a specified memory file.
@@ -18,8 +22,8 @@ class Storage:
 
         :param data: a list of dictionaries to be saved.
         """
-        with open(self.memory_file, "wb") as f:
-            pickle.dump(data, f)
+        with open(self.memory_file, "wb") as file_handler:
+            pickle.dump(data, file_handler)
 
     def load_from_disk(self) -> List[Dict[str, Any]]:
         """
@@ -29,6 +33,6 @@ class Storage:
         """
         if not os.path.exists(self.memory_file):
             return []
-        with open(self.memory_file, "rb") as f:
-            data = pickle.load(f)
+        with open(self.memory_file, "rb") as file_handler:
+            data = pickle.load(file_handler)
         return data

@@ -3,32 +3,46 @@ import numpy as np
 import faiss
 import sklearn
 
-mprt_loaded = True
+MPRT_LOADED = True
 try:
     import mprt
 except ImportError:
     print(
-        "Warning: mprt could not be imported. Install with 'pip install git+https://github.com/vioshyvo/mrpt/'. Falling back to Faiss."
+        "Warning: mprt could not be imported. Install with 'pip install git+https://github.com/vioshyvo/mrpt/'. "
+        "Falling back to Faiss."
     )
-    mprt_loaded = False
+    MPRT_LOADED = False
 
 
 class VectorSearch:
+    """
+    A class to perform vector search using different methods (MRPT, Faiss, or scikit-learn).
+    """
+
     @staticmethod
-    def run_mrpt(vector, vectors, k=15):        
-        index = mrpt.MRPTIndex(vectors)
+    def run_mrpt(vector, vectors, k=15):
+        """
+        Search for the most similar vectors using MRPT method.
+        """
+        index = mprt.MRPTIndex(vectors)
         res = index.exact_search(vector, k, return_distances=False)
         return res
 
     @staticmethod
     def run_faiss(vector, vectors, k=15):
-        index = faiss.IndexFlatL2(vectors.shape[-1])
+        """
+        Search for the most similar vectors using Faiss method.
+        """
+        index = faiss.IndexFlatL2(vectors.shape[1])
         index.add(vectors)
-        D, I = index.search(np.array([vector]), k)
-        return I[0]
+        _, indices = index.search(np.array([vector]), k)
+        return indices[0]
 
     @staticmethod
     def run_sk(vector, vectors, k=15):
+        """
+        Search for the most similar vectors using scikit-learn method.
+        """
         similarities = sklearn.metrics.pairwise_distances(
             [vector], vectors, metric="euclidean", n_jobs=-1
         )
@@ -49,14 +63,13 @@ class VectorSearch:
         :return: a list of indices of the top_n most similar vectors in the embeddings.
         """
         if isinstance(embeddings, list):
-            embeddings=np.array(embeddings).astype(np.float32)
+            embeddings = np.array(embeddings).astype(np.float32)
 
-        if len(embeddings) < 3000 or not mprt_loaded:
+        if len(embeddings) < 3000 or not MPRT_LOADED:
             call_search = VectorSearch.run_faiss
         else:
             call_search = VectorSearch.run_mrpt
 
-        
         indices = call_search(query_embedding, embeddings, top_n)
-        
+
         return indices

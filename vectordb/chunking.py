@@ -1,11 +1,15 @@
-from typing import List, Callable
-import spacy
+from typing import List
 import re
+import spacy
 
 nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
 
 
 class Chunker:
+    """
+    This class provides a way to chunk a given text using different strategies.
+    """
+
     def __init__(self, strategy: dict):
         """
         Initializes the Chunker with a specified strategy.
@@ -22,7 +26,8 @@ class Chunker:
         else:
             raise ValueError(f"Invalid chunking strategy: {strategy}")
 
-    def clean_text(self, text: str) -> str:
+    @staticmethod
+    def clean_text(text: str) -> str:
         """
         Removes extra whitespaces from the input text.
 
@@ -43,10 +48,10 @@ class Chunker:
         """
         paragraphs = text.split("\n\n")
         cleaned_paragraphs = []
-        for p in paragraphs:
-            cleaned_p = self.clean_text(p)
-            if cleaned_p:
-                cleaned_paragraphs.append(cleaned_p)
+        for paragraph in paragraphs:
+            cleaned_paragraph = self.clean_text(paragraph)
+            if cleaned_paragraph:
+                cleaned_paragraphs.append(cleaned_paragraph)
         return cleaned_paragraphs
 
     def sliding_window_chunking(self, text: str) -> List[str]:

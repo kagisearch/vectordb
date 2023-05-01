@@ -3,11 +3,17 @@ from sentence_transformers import SentenceTransformer
 
 
 class Embedder:
+    """
+    This class provides a way to generate embeddings for given text chunks using a specified 
+    pre-trained model.
+    """
+
     def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
         """
         Initializes the Embedder with a specified model.
 
-        :param model_name: a string containing the name of the pre-trained model to be used for embeddings.
+        :param model_name: a string containing the name of the pre-trained model to be used 
+        for embeddings.
         """
         self.model = SentenceTransformer(model_name)
 
