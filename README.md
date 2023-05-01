@@ -2,11 +2,11 @@
 
 [![](https://dcbadge.vercel.app/api/server/aDNg6E9szy?compact=true&style=flat)](https://discord.gg/aDNg6E9szy) [![Twitter](https://img.shields.io/twitter/follow/KagiHQ?style=social)](https://twitter.com/KagiHQ) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/license/mit/) 
 
-VectorDB is a lightweight Python package for storing and retrieving text using chunking, embedding, and vector search techniques. It provides an easy-to-use interface for saving, searching, and managing textual data with associated metadata.
+VectorDB is a lightweight, low-latency Python package for storing and retrieving text using chunking, embedding, and vector search techniques. It provides an easy-to-use interface for saving, searching, and managing textual data with associated metadata and is designed for use cases where low latency is essential.
 
 ## Installation
 
-To install VectorDB, use pip:
+To install VectorDB, use pip (note vectordb2 package name):
 
 ```
 pip install vectordb2
@@ -25,9 +25,11 @@ memory = Memory()
 # metadata = {...}
 
 # Save text with metadata
+# This will automatically embed content
 memory.save(text, metadata)
 
-# Search for relevant chunks
+# Search for top n relevant chunks
+# We will automatically use the fastest vector search backend
 results = memory.search(query, top_n=3)
 ```
 
@@ -35,23 +37,23 @@ results = memory.search(query, top_n=3)
 Memory provides the following methods:
 
 
-**__init__(self, memory_file=None, chunking_strategy={"mode":"sliding_window"},
+**__init__(memory_file=None, chunking_strategy={"mode":"sliding_window"},
 embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 
 
 - Initializes the Memory class.
-- **memory_file** (str): Path to the memory file (default: None). If provided, memory will persist to disk.
-- **chunking_strategy** (dict): Dictionary containing the chunking mode (default: {"mode": "sliding_window"})
-   Options::
-	{'mode':'sliding_window', 'window_size': 256, 'overlap': 32}
+- **memory_file** (str): Path to the memory file (default: None). If provided, memory will persist to disk and loaded/saved to this file. save() will automatically use the provided memory_file.
+- **chunking_strategy** (dict): Dictionary containing the chunking mode (default: {"mode": "sliding_window"})\
+   Options:\
+	{'mode':'sliding_window', 'window_size': 256, 'overlap': 32}\
 	{'mode':'paragraph'}
 - **embedding_model** (str): Name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2"). See [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
 
-**save(self, texts, metadata_list, memory_file=None)**
+**save(texts, metadata, memory_file=None)**
 
 - Saves the given texts and metadata to memory.
 - **texts** (str or list of str): Text or list of texts to be saved.
-- **metadata_list** (dict or list of dict): Metadata or list of metadata associated with the texts.
+- **metdata** (dict or list of dict): Metadata or list of metadata associated with the texts.
 - **memory_file** (str): Path to the memory file (default: None).
 
 **search(self, query, top_n=5)**
@@ -175,6 +177,11 @@ Output:
 ]
 ```
 
+## Vector search performance
+
+VectorDB is optimized for speed of retrieval and uses [Faiss](https://github.com/facebookresearch/faiss) for low number of chunks (<4000) and [mrpt](https://github.com/vioshyvo/mrpt) for high number of chunks to ensure maximum performance across the spectrum of use cases.
+
+![Vector search engine comparison](images/comparison.png)
 
 ## License
 
