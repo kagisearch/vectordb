@@ -45,9 +45,9 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
 - **memory_file** (str): Path to the memory file (default: None). If provided, memory will persist to disk and loaded/saved to this file. save() will automatically use the provided memory_file.
 - **chunking_strategy** (dict): Dictionary containing the chunking mode (default: {"mode": "sliding_window"})\
    Options:\
-	{'mode':'sliding_window', 'window_size': 256, 'overlap': 32}\
+	{'mode':'sliding_window', 'window_size': 240, 'overlap': 8}\
 	{'mode':'paragraph'}
-- **embedding_model** (str): Name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2"). See [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
+- **embeddings** (str): can be 'fast', 'normal' or 'best' or the name of the pre-trained embeddings model from HuggingFace to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2"). See [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
 
 **save(texts, metadata, memory_file=None)**
 

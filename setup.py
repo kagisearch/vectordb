@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="vectordb2",
-    version="0.1.2",
+    version="0.1.3",
     packages=find_packages(),
     install_requires=[
         "torch>=1.9.0",
@@ -12,6 +12,7 @@ setup(
         "scipy>=1.7.0",
         "sentence_transformers",
         "faiss-cpu",
+        "tensorflow_text"
     ],
     author="Vladimir Prelovac",
     author_email="vlad@kagi.com",

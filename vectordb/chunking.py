@@ -21,8 +21,8 @@ class Chunker:
             self.strategy = self.paragraph_chunking
         elif strategy["mode"] == "sliding_window":
             self.strategy = self.sliding_window_chunking
-            self.window_size = strategy.get("window_size", 256)
-            self.overlap = strategy.get("overlap", 32)
+            self.window_size = strategy.get("window_size", 240)
+            self.overlap = strategy.get("overlap", 8)
         else:
             raise ValueError(f"Invalid chunking strategy: {strategy}")
 
@@ -67,7 +67,9 @@ class Chunker:
             )
 
         text = self.clean_text(text)
-        tokens = [t.text for t in nlp(text)]
+
+        tokens = text.split()
+        # tokens = [t.text for t in nlp(text)]
 
         # Use a list comprehension to create chunks from windows
         step = self.window_size - self.overlap

@@ -9,6 +9,8 @@ from .chunking import Chunker
 from .embedding import Embedder
 from .vector_search import VectorSearch
 from .storage import Storage
+import time
+import tensorflow as tf
 
 
 class Memory:
@@ -21,7 +23,7 @@ class Memory:
         self,
         memory_file: str = None,
         chunking_strategy: dict = None,
-        embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2",
+        embeddings: str = "normal",
     ):
         """
         Initializes the Memory class.
@@ -37,10 +39,16 @@ class Memory:
         if chunking_strategy is None:
             chunking_strategy = {"mode": "sliding_window"}
         self.chunker = Chunker(chunking_strategy)
-        self.embedder = Embedder(embedding_model)
+        self.embedder = Embedder(embeddings)
         self.vector_search = VectorSearch()
 
-    def save(self, texts, metadata, memory_file: str = None):
+    def save(
+        self,
+        texts,
+        metadata: list = [],
+        memory_file: str = None,
+        embed_at_search: bool = False,
+    ):
         """
         Saves the given texts and metadata to memory.
 
@@ -53,18 +61,25 @@ class Memory:
         if not isinstance(metadata, list):
             metadata = [metadata]
 
+        # Extend metadata to be the same length as texts, if it's shorter.
+        metadata += [{}] * (len(texts) - len(metadata))
+
         if memory_file is None:
             memory_file = self.memory_file
+
         for text, meta in zip(texts, metadata):
             chunks = self.chunker.strategy(text)
             embeddings = self.embedder.embed_text(chunks)
             for chunk, embedding in zip(chunks, embeddings):
                 entry = {
                     "chunk": chunk,
-                    "embedding": embedding.tolist(),
+                    "embedding": embedding.numpy().tolist()
+                    if isinstance(embedding, tf.Tensor)
+                    else embedding.tolist(),
                     "metadata": meta,
                 }
                 self.memory.append(entry)
+
         if memory_file is not None:
             Storage(memory_file).save_to_disk(self.memory)
 
@@ -102,4 +117,4 @@ class Memory:
             print("Embedding Length:", len(entry["embedding"]))
             print("Metadata:", entry["metadata"])
             print("-" * 40)
-        print("Total entries: ", len)
+        print("Total entries: ", len(self.memory))
