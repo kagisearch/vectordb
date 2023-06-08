@@ -4,7 +4,7 @@ for text and associated metadata, with functionality for saving, searching, and
 managing memory entries.
 """
 
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Union
 from .chunking import Chunker
 from .embedding import Embedder
 from .vector_search import VectorSearch
@@ -45,7 +45,7 @@ class Memory:
     def save(
         self,
         texts,
-        metadata: list = [],
+        metadata: Union[List, List[dict], None] = None,
         memory_file: str = None,
         embed_at_search: bool = False,
     ):
@@ -58,7 +58,10 @@ class Memory:
         """
         if not isinstance(texts, list):
             texts = [texts]
-        if not isinstance(metadata, list):
+
+        if metadata is None:
+            metadata = []
+        elif not isinstance(metadata, list):
             metadata = [metadata]
 
         # Extend metadata to be the same length as texts, if it's shorter.
