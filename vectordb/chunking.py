@@ -2,7 +2,7 @@ from typing import List
 import re
 import spacy
 
-nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
+# nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
 
 
 class Chunker:
