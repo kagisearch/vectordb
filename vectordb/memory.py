@@ -6,7 +6,7 @@ managing memory entries.
 
 from typing import List, Dict, Any, Union
 from .chunking import Chunker
-from .embedding import Embedder
+from .embedding import BaseEmbedder, Embedder
 from .vector_search import VectorSearch
 from .storage import Storage
 import tensorflow as tf
@@ -22,7 +22,7 @@ class Memory:
         self,
         memory_file: str = None,
         chunking_strategy: dict = None,
-        embeddings: str = "normal",
+        embeddings: Union[BaseEmbedder, str] = "normal",
     ):
         """
         Initializes the Memory class.
@@ -38,7 +38,14 @@ class Memory:
         if chunking_strategy is None:
             chunking_strategy = {"mode": "sliding_window"}
         self.chunker = Chunker(chunking_strategy)
-        self.embedder = Embedder(embeddings)
+
+        if isinstance(embeddings, str):
+            self.embedder = Embedder(embeddings)
+        elif isinstance(embeddings, BaseEmbedder):
+            self.embedder = embeddings
+        else:
+            raise TypeError("Embeddings must be an Embedder instance or string")
+
         self.vector_search = VectorSearch()
 
     def save(

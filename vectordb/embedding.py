@@ -1,11 +1,20 @@
+from abc import ABC, abstractmethod
 from typing import List
-from sentence_transformers import SentenceTransformer
-import tensorflow_hub as hub
-from tensorflow_text import SentencepieceTokenizer
+
 import tensorflow as tf
+import tensorflow_hub as hub
+from sentence_transformers import SentenceTransformer
+from tensorflow_text import SentencepieceTokenizer
 
 
-class Embedder:
+class BaseEmbedder(ABC):
+    """Base class for Embedder."""
+    @abstractmethod
+    def embed_text(self, chunks: List[str]) -> List[List[float]]:
+        ...
+
+
+class Embedder(BaseEmbedder):
     """
     This class provides a way to generate embeddings for given text chunks using a specified
     pre-trained model.
