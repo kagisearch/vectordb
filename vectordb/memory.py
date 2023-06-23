@@ -82,9 +82,7 @@ class Memory:
             for chunk, embedding in zip(chunks, embeddings):
                 entry = {
                     "chunk": chunk,
-                    "embedding": embedding.numpy().tolist()
-                    if isinstance(embedding, tf.Tensor)
-                    else embedding.tolist(),
+                    "embedding": embedding,
                     "metadata": meta,
                 }
                 self.memory.append(entry)

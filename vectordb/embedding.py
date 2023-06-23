@@ -53,7 +53,7 @@ class Embedder(BaseEmbedder):
         :return: a list of embeddings, where each embedding is represented as a list of floats.
         """
         if self.sbert:
-            embeddings = self.model.encode(chunks)
+            embeddings = self.model.encode(chunks).tolist()
         else:
-            embeddings = self.model(chunks)
+            embeddings = self.model(chunks).numpy().tolist()
         return embeddings
