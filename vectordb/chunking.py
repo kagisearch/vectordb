@@ -1,8 +1,5 @@
 from typing import List
 import re
-import spacy
-
-# nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
 
 
 class Chunker:
@@ -69,7 +66,6 @@ class Chunker:
         text = self.clean_text(text)
 
         tokens = text.split()
-        # tokens = [t.text for t in nlp(text)]
 
         # Use a list comprehension to create chunks from windows
         step = self.window_size - self.overlap
