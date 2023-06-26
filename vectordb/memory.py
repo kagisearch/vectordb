@@ -80,7 +80,7 @@ class Memory:
         text_chunks = [self.chunker(text) for text in texts]
         chunks_size = [len(chunks) for chunks in text_chunks]
 
-        flatten_chunks = itertools.chain.from_iterable(text_chunks)
+        flatten_chunks = list(itertools.chain.from_iterable(text_chunks))
         embeddings = self.embedder.embed_text(flatten_chunks)
 
         # accumulated size is end_index of each chunk
