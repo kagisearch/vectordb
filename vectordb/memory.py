@@ -123,9 +123,9 @@ class Memory:
         """
         Clears the memory.
         """
-        self.memory = []
         if self.memory_file is not None:
             Storage(self.memory_file).save_to_disk(self.memory)
+        self.memory = []
 
     def dump(self):
         """
