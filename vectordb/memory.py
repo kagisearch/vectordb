@@ -84,20 +84,22 @@ class Memory:
         embeddings = self.embedder.embed_text(flatten_chunks)
 
         # accumulated size is end_index of each chunk
-        for size, end_index, chunk, meta in zip(
+        for size, end_index, chunks, meta in zip(
             chunks_size,
             itertools.accumulate(chunks_size),
             text_chunks,
             metadata
         ):
             start_index = end_index - size
-            embedding = embeddings[start_index: end_index]
-            entry = {
-                "chunk": chunk,
-                "embedding": embedding,
-                "metadata": meta,
-            }
-            self.memory.append(entry)
+            chunks_embedding = embeddings[start_index: end_index]
+
+            for chunk, embedding in zip(chunks, chunks_embedding):
+                entry = {
+                    "chunk": chunk,
+                    "embedding": embedding,
+                    "metadata": meta,
+                }
+                self.memory.append(entry)
 
         if memory_file is not None:
             Storage(memory_file).save_to_disk(self.memory)
