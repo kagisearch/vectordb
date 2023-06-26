@@ -9,6 +9,7 @@ from .chunking import Chunker
 from .embedding import BaseEmbedder, Embedder
 from .vector_search import VectorSearch
 from .storage import Storage
+import itertools
 import tensorflow as tf
 
 
@@ -76,16 +77,27 @@ class Memory:
         if memory_file is None:
             memory_file = self.memory_file
 
-        for text, meta in zip(texts, metadata):
-            chunks = self.chunker(text)
-            embeddings = self.embedder.embed_text(chunks)
-            for chunk, embedding in zip(chunks, embeddings):
-                entry = {
-                    "chunk": chunk,
-                    "embedding": embedding,
-                    "metadata": meta,
-                }
-                self.memory.append(entry)
+        text_chunks = [self.chunker(text) for text in texts]
+        chunks_size = [len(chunks) for chunks in text_chunks]
+
+        flatten_chunks = itertools.chain.from_iterable(text_chunks)
+        embeddings = self.embedder.embed_text(flatten_chunks)
+
+        # accumulated size is end_index of each chunk
+        for size, end_index, chunk, meta in zip(
+            chunks_size,
+            itertools.accumulate(chunks_size),
+            text_chunks,
+            metadata
+        ):
+            start_index = end_index - size
+            embedding = embeddings[start_index: end_index]
+            entry = {
+                "chunk": chunk,
+                "embedding": embedding,
+                "metadata": meta,
+            }
+            self.memory.append(entry)
 
         if memory_file is not None:
             Storage(memory_file).save_to_disk(self.memory)
