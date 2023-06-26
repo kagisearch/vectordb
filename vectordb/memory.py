@@ -77,7 +77,7 @@ class Memory:
             memory_file = self.memory_file
 
         for text, meta in zip(texts, metadata):
-            chunks = self.chunker.strategy(text)
+            chunks = self.chunker(text)
             embeddings = self.embedder.embed_text(chunks)
             for chunk, embedding in zip(chunks, embeddings):
                 entry = {

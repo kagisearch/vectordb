@@ -14,14 +14,12 @@ class Chunker:
         :param strategy: a dictionary containing the chunking mode (paragraph or sliding_window)
                          and optional window_size and overlap values for sliding_window mode.
         """
-        if strategy["mode"] == "paragraph":
-            self.strategy = self.paragraph_chunking
-        elif strategy["mode"] == "sliding_window":
-            self.strategy = self.sliding_window_chunking
-            self.window_size = strategy.get("window_size", 240)
-            self.overlap = strategy.get("overlap", 8)
-        else:
-            raise ValueError(f"Invalid chunking strategy: {strategy}")
+        self.strategy = strategy["mode"]
+        if self.strategy not in {"paragraph", "sliding_window"}:
+            raise ValueError(f"Invalid chunking strategy: {self.strategy}")
+
+        self.window_size = strategy.get("window_size", 240)
+        self.overlap = strategy.get("overlap", 8)
 
     @staticmethod
     def clean_text(text: str) -> str:
@@ -35,6 +33,12 @@ class Chunker:
         text = re.sub(r"\s+", " ", text).strip()
 
         return text
+
+    def __call__(self, text: str) -> List[str]:
+        if self.strategy == "paragraph":
+            return self.paragraph_chunking(text)
+        else:
+            return self.sliding_window_chunking(text)
 
     def paragraph_chunking(self, text: str) -> List[str]:
         """
