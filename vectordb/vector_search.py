@@ -3,15 +3,15 @@ import numpy as np
 import faiss
 import sklearn
 
-MPRT_LOADED = True
+MRPT_LOADED = True
 try:
-    import mprt
+    import mrpt
 except ImportError:
     print(
-        "Warning: mprt could not be imported. Install with 'pip install git+https://github.com/vioshyvo/mrpt/'. "
+        "Warning: mrpt could not be imported. Install with 'pip install git+https://github.com/vioshyvo/mrpt/'. "
         "Falling back to Faiss."
     )
-    MPRT_LOADED = False
+    MRPT_LOADED = False
 
 
 class VectorSearch:
@@ -65,7 +65,7 @@ class VectorSearch:
         if isinstance(embeddings, list):
             embeddings = np.array(embeddings).astype(np.float32)
 
-        if len(embeddings) < 3000 or not MPRT_LOADED:
+        if len(embeddings) < 3000 or not MRPT_LOADED:
             call_search = VectorSearch.run_faiss
         else:
             call_search = VectorSearch.run_mrpt
