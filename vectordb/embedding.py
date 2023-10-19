@@ -36,10 +36,13 @@ class Embedder(BaseEmbedder):
             self.sbert = False
 
         else:
+            #if model_name == "fast":
+            #    model_name = "sentence-transformers/all-MiniLM-L6-v2"
             if model_name == "normal":
-                model_name = "sentence-transformers/all-MiniLM-L6-v2"
+                model_name = "BAAI/bge-small-en-v1.5"
             elif model_name == "best":
-                model_name = "sentence-transformers/all-mpnet-base-v2"
+                model_name = "BAAI/bge-base-en-v1.5"
+                
 
             self.model = SentenceTransformer(model_name)
 
