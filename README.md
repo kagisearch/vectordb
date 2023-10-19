@@ -30,6 +30,7 @@ memory.save(text, metadata)
 
 # Search for top n relevant chunks
 # We will automatically use the fastest vector search backend
+query="hello"
 results = memory.search(query, top_n=1)
 ```
 
@@ -38,7 +39,7 @@ Memory provides the following methods:
 
 
 **__init__(memory_file=None, chunking_strategy={"mode":"sliding_window"},
-embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
+embeddings="normal")**
 
 
 - Initializes the Memory class.
@@ -47,7 +48,7 @@ embedding_model="sentence-transformers/all-MiniLM-L6-v2")**
    Options:\
 	{'mode':'sliding_window', 'window_size': 240, 'overlap': 8}\
 	{'mode':'paragraph'}
-- **embeddings** (str): can be 'fast', 'normal' or 'best' or the name of the pre-trained embeddings model from HuggingFace to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2"). See [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
+- **embeddings** (str): can be 'fast', 'normal' or 'best' or the name of the pre-trained embeddings model from HuggingFace to be used for embeddings (default: "normal" is same as "BAAI/bge-small-en-v1.5"). See [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
 
 **save(texts, metadata, memory_file=None)**
 

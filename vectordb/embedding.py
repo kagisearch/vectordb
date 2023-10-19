@@ -36,7 +36,7 @@ class Embedder(BaseEmbedder):
             self.sbert = False
 
         else:
-            #if model_name == "fast":
+            #if model_name == "normal":
             #    model_name = "sentence-transformers/all-MiniLM-L6-v2"
             if model_name == "normal":
                 model_name = "BAAI/bge-small-en-v1.5"
