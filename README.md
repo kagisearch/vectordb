@@ -21,8 +21,8 @@ from vectordb import Memory
 
 memory = Memory()
 
-# text = "..."
-# metadata = {...}
+text = "Hello world"
+metadata = {'url':'https://example.com'}
 
 # Save text with metadata
 # This will automatically embed content
@@ -30,7 +30,7 @@ memory.save(text, metadata)
 
 # Search for top n relevant chunks
 # We will automatically use the fastest vector search backend
-results = memory.search(query, top_n=3)
+results = memory.search(query, top_n=1)
 ```
 
 ## Methods
