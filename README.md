@@ -224,7 +224,7 @@ Models are evaulated using standaridzed embeddings benchmarks *higher is better)
 
 ![Embeddings Quality](images/quality.png)
 
-![Scatter of Embeddings](images/quality.png)
+![Scatter of Embeddings](images/scatter.png)
 
 
 
