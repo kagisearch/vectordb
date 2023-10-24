@@ -41,7 +41,7 @@ class Embedder(BaseEmbedder):
             if model_name == "normal":
                 model_name = "BAAI/bge-small-en-v1.5"
             elif model_name == "best":
-                model_name = "BAAI/bge-large-en-v1.5"
+                model_name = "BAAI/bge-base-en-v1.5"
                 
 
             self.model = SentenceTransformer(model_name)

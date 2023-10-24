@@ -24,6 +24,7 @@ class Memory:
         memory_file: str = None,
         chunking_strategy: dict = None,
         embeddings: Union[BaseEmbedder, str] = "normal",
+        embed_on_save: bool = True
     ):
         """
         Initializes the Memory class.
@@ -59,7 +60,6 @@ class Memory:
         texts,
         metadata: Union[List, List[dict], None] = None,
         memory_file: str = None,
-        embed_at_search: bool = False,
     ):
         """
         Saves the given texts and metadata to memory.
@@ -99,9 +99,12 @@ class Memory:
 
 
         text_index_start = self.text_index_counter  # Starting index for this save operation
-        self.text_index_counter += len(texts)  # Update the counter for future save operations
 
-
+        if self.embed_on_save:  # <-- New condition
+            embeddings = self.embedder.embed_text(flatten_chunks)
+        else:
+            embeddings = [None] * len(flatten_chunks)  # Placeholder for future embedding
+        
         # accumulated size is end_index of each chunk
         for size, end_index, chunks, meta_index, text_index in zip(
             chunks_size,
@@ -114,7 +117,6 @@ class Memory:
             chunks_embedding = embeddings[start_index:end_index]
 
             for chunk, embedding in zip(chunks, chunks_embedding):
-                print(chunk)
                 entry = {
                     "chunk": chunk,
                     "embedding": embedding,
@@ -133,10 +135,26 @@ class Memory:
 
         :param query: a string containing the query text.
         :param top_n: the number of most similar chunks to return. (default: 5)
+        :param unique: chunks are filtered out to unique texts (default: False)
         :return: a list of dictionaries containing the top_n most similar chunks and their associated metadata.
         """
-        query_embedding = self.embedder.embed_text([query])[0]
-        embeddings = [entry["embedding"] for entry in self.memory]
+
+        if not self.embed_on_save:  # We need to dynamically create
+            all_chunks = [entry['chunk'] for entry in self.memory]  # Gather all stored chunks
+            all_chunks.append(query)  # Add the query for simultaneous embedding
+            
+            all_embeddings = self.embedder.embed_text(all_chunks)  # Embed all at once
+            
+            query_embedding = all_embeddings[-1]  # Last is the query
+            embeddings = all_embeddings[:-1]  # All but last are the stored chunks
+            
+            # Update stored embeddings
+            for i, entry in enumerate(self.memory):
+                entry['embedding'] = all_embeddings[i]
+        else:
+            query_embedding = self.embedder.embed_text([query])[0]
+            embeddings = [entry["embedding"] for entry in self.memory]
+
         indices = self.vector_search.search_vectors(query_embedding, embeddings, top_n)
 
         if unique:
