@@ -21,17 +21,22 @@ from vectordb import Memory
 
 memory = Memory()
 
-text = "Hello world"
-metadata = {'url':'https://example.com'}
+# memory.save(texts, metadata, memory_file)
+memory.save("Hello world")
 
-# Save text with metadata
-# This will automatically embed content
-memory.save(text, metadata)
+
+# You can also save content as a list with associated metadata as dict
+memory.save(
+    ["apples", "oranges"],
+    [{"url": "https://apples.com"}, {"url": "https://oranges.com"}],
+)
 
 # Search for top n relevant chunks
 # We will automatically use the fastest vector search backend
-query="hello"
+query = "hello"
 results = memory.search(query, top_n=1)
+print(results)
+
 ```
 
 ## Methods
@@ -62,6 +67,7 @@ embeddings="normal")**
 - Searches for the most similar chunks to the given query in memory.
 - **query** (str): Query text.
 - **top_n** (int): Number of most similar chunks to return (default: 5).
+- **unique** (bool): Return only items chunks from unique original texts (additional chunks coming from the same text will be ignored). Note this may return less chhunks than requested (default: False).
 - Returns: List of dictionaries containing the top_n most similar chunks and their associated metadata.
 
 **clear(self)**
@@ -79,9 +85,12 @@ embeddings="normal")**
 ```
 from vectordb import Memory
 
-memory = Memory(chunking_strategy={'mode':'sliding_window', 'window_size': 128, 'overlap': 16})
+memory = Memory(
+    chunking_strategy={"mode": "sliding_window", "window_size": 128, "overlap": 16}
+)
 
-text = """
+texts = [
+    """
 Machine learning is a method of data analysis that automates analytical model building.
 
 It is a branch of artificial intelligence based on the idea that systems can learn from data,
@@ -101,14 +110,8 @@ Clustering: Finding groups of similar data points. For example, a machine learni
 Anomaly detection: Finding data points that are different from the rest of the data. For example, a machine learning algorithm could be used to find fraudulent credit card transactions.
 
 Machine learning is a powerful tool that can be used to solve a wide variety of problems. As the amount of data available continues to grow, machine learning is likely to become even more important in the future.
-
-"""
-
-metadata = {"title": "Introduction to Machine Learning", "url": "https://example.com/introduction-to-machine-learning"}
-
-memory.save(text, metadata)
-
-text2 = """
+""",
+    """
 Artificial intelligence (AI) is the simulation of human intelligence in machines
 that are programmed to think like humans and mimic their actions.
 
@@ -135,16 +138,24 @@ Weaponization: AI could be used to develop new weapons that are more powerful an
 Loss of control: If AI becomes too powerful, we may lose control over it, with potentially disastrous consequences.
 
 It is important to weigh the potential benefits and risks of AI carefully as we continue to develop this technology. With careful planning and oversight, AI has the potential to make the world a better place. However, if we are not careful, it could also lead to serious problems.
-"""
+""",
+]
 
-metadata2 = {"title": "Introduction to Artificial Intelligence", "url": "https://example.com/introduction-to-artificial-intelligence"}
+metadata_list = [
+    {
+        "title": "Introduction to Machine Learning",
+        "url": "https://example.com/introduction-to-machine-learning",
+    },
+    {
+        "title": "Introduction to Artificial Intelligence",
+        "url": "https://example.com/introduction-to-artificial-intelligence",
+    },
+]
 
-memory.save(text2, metadata2)
+memory.save(texts, metadata_list)
 
 query = "What is the relationship between AI and machine learning?"
-
 results = memory.search(query, top_n=3)
-
 print(results)
 ```
 

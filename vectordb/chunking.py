@@ -71,6 +71,10 @@ class Chunker:
 
         tokens = text.split()
 
+        # If the text contains fewer tokens than window_size, return the text as a single chunk.
+        if len(tokens) < self.window_size:
+            return [text]
+
         # Use a list comprehension to create chunks from windows
         step = self.window_size - self.overlap
         # Ensure the range covers the entire length of the tokens

@@ -33,12 +33,17 @@ class Memory:
         :param embedding_model: a string containing the name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2").
         """
         self.memory_file = memory_file
+
         self.memory = (
             [] if memory_file is None else Storage(memory_file).load_from_disk()
         )
         if chunking_strategy is None:
             chunking_strategy = {"mode": "sliding_window"}
         self.chunker = Chunker(chunking_strategy)
+
+        self.metadata_memory = []
+        self.metadata_index_counter = 0
+        self.text_index_counter = 0 
 
         if isinstance(embeddings, str):
             self.embedder = Embedder(embeddings)
@@ -66,6 +71,7 @@ class Memory:
         if not isinstance(texts, list):
             texts = [texts]
 
+       
         if metadata is None:
             metadata = []
         elif not isinstance(metadata, list):
@@ -74,37 +80,54 @@ class Memory:
         # Extend metadata to be the same length as texts, if it's shorter.
         metadata += [{}] * (len(texts) - len(metadata))
 
+        for meta in metadata:
+            self.metadata_memory.append(meta)
+
+        meta_index_start = self.metadata_index_counter  # Starting index for this save operation
+        self.metadata_index_counter += len(metadata)  # Update the counter for future save operations
+    
+
         if memory_file is None:
             memory_file = self.memory_file
 
         text_chunks = [self.chunker(text) for text in texts]
+     
         chunks_size = [len(chunks) for chunks in text_chunks]
 
         flatten_chunks = list(itertools.chain.from_iterable(text_chunks))
         embeddings = self.embedder.embed_text(flatten_chunks)
 
+
+        text_index_start = self.text_index_counter  # Starting index for this save operation
+        self.text_index_counter += len(texts)  # Update the counter for future save operations
+
+
         # accumulated size is end_index of each chunk
-        for size, end_index, chunks, meta in zip(
+        for size, end_index, chunks, meta_index, text_index in zip(
             chunks_size,
             itertools.accumulate(chunks_size),
             text_chunks,
-            metadata
+            range(meta_index_start, self.metadata_index_counter),
+            range(text_index_start, self.text_index_counter),
         ):
             start_index = end_index - size
-            chunks_embedding = embeddings[start_index: end_index]
+            chunks_embedding = embeddings[start_index:end_index]
 
             for chunk, embedding in zip(chunks, chunks_embedding):
+                print(chunk)
                 entry = {
                     "chunk": chunk,
                     "embedding": embedding,
-                    "metadata": meta,
+                    "metadata_index": meta_index,
+                    "text_index": text_index,
                 }
                 self.memory.append(entry)
+            text_index += 1
 
         if memory_file is not None:
             Storage(memory_file).save_to_disk(self.memory)
 
-    def search(self, query: str, top_n: int = 5) -> List[Dict[str, Any]]:
+    def search(self, query: str, top_n: int = 5, unique=False) -> List[Dict[str, Any]]:
         """
         Searches for the most similar chunks to the given query in memory.
 
@@ -115,8 +138,28 @@ class Memory:
         query_embedding = self.embedder.embed_text([query])[0]
         embeddings = [entry["embedding"] for entry in self.memory]
         indices = self.vector_search.search_vectors(query_embedding, embeddings, top_n)
+
+        if unique:
+            unique_indices = []
+            seen_text_indices = set()  # Change the variable name
+            for i in indices:
+                text_index = self.memory[i][
+                    "text_index"
+                ]  # Use text_index instead of metadata_index
+                if (
+                    text_index not in seen_text_indices
+                ):  # Use seen_text_indices instead of seen_meta_indices
+                    unique_indices.append(i)
+                    seen_text_indices.add(
+                        text_index
+                    )  # Use seen_text_indices instead of seen_meta_indices
+            indices = unique_indices
+
         results = [
-            {"chunk": self.memory[i]["chunk"], "metadata": self.memory[i]["metadata"]}
+            {
+                "chunk": self.memory[i]["chunk"],
+                "metadata": self.metadata_memory[self.memory[i]["metadata_index"]],
+            }
             for i in indices
         ]
         return results
@@ -125,9 +168,13 @@ class Memory:
         """
         Clears the memory.
         """
+        self.memory = []
+        self.metadata_memory = []
+        self.metadata_index_counter = 0
+        self.text_index_counter = 0 
+
         if self.memory_file is not None:
             Storage(self.memory_file).save_to_disk(self.memory)
-        self.memory = []
 
     def dump(self):
         """
@@ -136,6 +183,10 @@ class Memory:
         for entry in self.memory:
             print("Chunk:", entry["chunk"])
             print("Embedding Length:", len(entry["embedding"]))
-            print("Metadata:", entry["metadata"])
+            print("Metadata:", self.metadata_memory[entry["metadata_index"]])
             print("-" * 40)
+            
         print("Total entries: ", len(self.memory))
+        print("Total metadata: ", len(self.metadata_memory))
+
+
