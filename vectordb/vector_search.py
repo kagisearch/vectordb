@@ -1,3 +1,9 @@
+"""
+This module provides the VectorSearch class for performing vector search using various algorithms.
+"""
+
+# pylint: disable = line-too-long, trailing-whitespace, trailing-newlines
+
 from typing import List
 import numpy as np
 import faiss
@@ -24,7 +30,7 @@ class VectorSearch:
         """
         Search for the most similar vectors using MRPT method.
         """
-        index = mprt.MRPTIndex(vectors)
+        index = mrpt.MRPTIndex(vectors)
         res = index.exact_search(vector, k, return_distances=False)
         return res
 

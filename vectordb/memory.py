@@ -3,14 +3,15 @@ This module provides the Memory class that represents a memory storage system
 for text and associated metadata, with functionality for saving, searching, and
 managing memory entries.
 """
+#pylint: disable = line-too-long, trailing-whitespace, trailing-newlines
 
 from typing import List, Dict, Any, Union
+import itertools
+
 from .chunking import Chunker
 from .embedding import BaseEmbedder, Embedder
 from .vector_search import VectorSearch
 from .storage import Storage
-import itertools
-import tensorflow as tf
 
 
 class Memory:
@@ -34,6 +35,7 @@ class Memory:
         :param embedding_model: a string containing the name of the pre-trained model to be used for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2").
         """
         self.memory_file = memory_file
+        self.embed_on_save = embed_on_save
 
         self.memory = (
             [] if memory_file is None else Storage(memory_file).load_from_disk()

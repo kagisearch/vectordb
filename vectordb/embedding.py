@@ -1,17 +1,22 @@
+"""
+This module provides classes for generating text embeddings using various pre-trained models.
+"""
+
+# pylint: disable = line-too-long, trailing-whitespace, trailing-newlines
+
 from abc import ABC, abstractmethod
 from typing import List
 
-import tensorflow as tf
 import tensorflow_hub as hub
 from sentence_transformers import SentenceTransformer
-from tensorflow_text import SentencepieceTokenizer
 
 
 class BaseEmbedder(ABC):
     """Base class for Embedder."""
     @abstractmethod
     def embed_text(self, chunks: List[str]) -> List[List[float]]:
-        ...
+        """Generates embeddings for a list of text chunks."""
+
 
 
 class Embedder(BaseEmbedder):

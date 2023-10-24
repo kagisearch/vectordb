@@ -1,3 +1,5 @@
+#pylint: disable = line-too-long, trailing-whitespace, trailing-newlines
+
 from typing import List
 import re
 
@@ -37,8 +39,8 @@ class Chunker:
     def __call__(self, text: str) -> List[str]:
         if self.strategy == "paragraph":
             return self.paragraph_chunking(text)
-        else:
-            return self.sliding_window_chunking(text)
+        
+        return self.sliding_window_chunking(text)
 
     def paragraph_chunking(self, text: str) -> List[str]:
         """
