@@ -4,6 +4,8 @@
 
 VectorDB is a lightweight, low-latency Python package for storing and retrieving text using chunking, embedding, and vector search techniques. It provides an easy-to-use interface for saving, searching, and managing textual data with associated metadata and is designed for use cases where low latency is essential.
 
+Because of low latency and memory footpring, VectorDB is used to power AI features inside [Kagi search](https://kagi.com).
+
 ## Installation
 
 To install VectorDB, use pip (note vectordb2 package name):
@@ -201,7 +203,7 @@ Output:
 
 ## Embeddings performance
 
-Models are evaulated using standaridzed embeddings benchmarks *higher is better). Data pulled from [MTEB](https://huggingface.co/spaces/mteb/leaderboard). Average latency measured on CPU (lower is better).
+Models are evaulated using standaridzed embeddings benchmarks (higher is better). Data pulled from [MTEB](https://huggingface.co/spaces/mteb/leaderboard). Average latency measured on CPU (lower is better).
 
 
 
