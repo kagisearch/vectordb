@@ -68,8 +68,8 @@ embeddings="normal")**
    Options:\
    `fast` - Uses Universal Sentence Encoder 4\
    `normal` - Uses "BAAI/bge-small-en-v1.5" (default)\
-   `best` - Uses "BAAI/bge-base-en-v1.5"
-   `multilingual` - Uses Universal Sentence Encoder Multilingual Large 3\
+   `best` - Uses "BAAI/bge-base-en-v1.5"\
+   `multilingual` - Uses Universal Sentence Encoder Multilingual Large 3
 
 
    You can also specify a custom HuggingFace model by name eg. `TaylorAI/bge-micro-v2`. See also [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
