@@ -2,7 +2,7 @@
 This module provides classes for generating text embeddings using various pre-trained models.
 """
 
-# pylint: disable = line-too-long, trailing-whitespace, trailing-newlines
+#pylint: disable = line-too-long, trailing-whitespace, trailing-newlines, line-too-long, missing-module-docstring, import-error, too-few-public-methods, too-many-instance-attributes, too-many-locals
 
 from abc import ABC, abstractmethod
 from typing import List
