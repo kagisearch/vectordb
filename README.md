@@ -40,11 +40,14 @@ results = memory.search(query, top_n=1)
 print(results)
 ```
 
+This returns the chunks with the added metadata and the vector distance (where 0 is the exact match and higher means further apart)
+
 ```
 [
   {
     "chunk": "Hello world",
-    "metadata": {}
+    "metadata": {},
+    "distance": 0.87
   }
 ]
 
@@ -189,14 +192,16 @@ Output:
     "metadata": {
       "title": "Introduction to Artificial Intelligence",
       "url": "https://example.com/introduction-to-artificial-intelligence"
-    }
+    },
+    "distance": 0.87
   },
   {
     "chunk": "Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention. Machine learning algorithms are trained on data sets that contain examples of the desired output. For example, a machine learning algorithm that is used to classify images might be trained on a data set that contains images of cats and dogs. Once an algorithm is trained, it can be used to make predictions on new data. For example, the machine learning algorithm that is used to classify images could be used to predict whether a new image contains a cat or a dog. Machine learning algorithms can be used",
     "metadata": {
       "title": "Introduction to Machine Learning",
       "url": "https://example.com/introduction-to-machine-learning"
-    }
+    },
+    "distance": 0.83
   }
 ]
 
