@@ -30,9 +30,11 @@ class VectorSearch:
         """
         Search for the most similar vectors using MRPT method.
         """
+        if isinstance(vector, list):
+            vector = np.array(vector).astype(np.float32)
         index = mrpt.MRPTIndex(vectors)
-        res = index.exact_search(vector, k, return_distances=False)
-        return res
+        res = index.exact_search(vector, k, return_distances=True)
+        return res[0].tolist(), res[1].tolist()
 
     @staticmethod
     def run_faiss(vector, vectors, k=15):
@@ -41,8 +43,8 @@ class VectorSearch:
         """
         index = faiss.IndexFlatL2(vectors.shape[1])
         index.add(vectors)
-        _, indices = index.search(np.array([vector]), k)
-        return indices[0]
+        dis, indices = index.search(np.array([vector]), k)
+        return indices[0], dis[0]
 
     @staticmethod
     def run_sk(vector, vectors, k=15):
@@ -59,7 +61,7 @@ class VectorSearch:
     @staticmethod
     def search_vectors(
         query_embedding: List[float], embeddings: List[List[float]], top_n: int
-    ) -> List[int]:
+    ) -> List[tuple[int, float]]:
         """
         Searches for the most similar vectors to the query_embedding in the given embeddings.
 
@@ -76,6 +78,6 @@ class VectorSearch:
         else:
             call_search = VectorSearch.run_mrpt
 
-        indices = call_search(query_embedding, embeddings, top_n)
+        indices, dis = call_search(query_embedding, embeddings, top_n)
 
-        return indices
+        return list(zip(indices, dis))
