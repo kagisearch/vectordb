@@ -182,8 +182,9 @@ class Memory:
 
         results = [
             {
-                "chunk": self.memory[i]["chunk"],
-                "metadata": self.metadata_memory[self.memory[i]["metadata_index"]],
+                "chunk": self.memory[i[0]]["chunk"],
+                "metadata": self.metadata_memory[self.memory[i[0]]["metadata_index"]],
+                "distance": i[1]
             }
             for i in indices
         ]
