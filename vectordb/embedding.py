@@ -39,7 +39,11 @@ class Embedder(BaseEmbedder):
                 "https://tfhub.dev/google/universal-sentence-encoder/4"
             )
             self.sbert = False
-
+        elif model_name == "multilingual" :
+            self.model = hub.load(
+                "universal-sentence-encoder-multilingual-large/3"
+            )
+            self.sbert = False
         else:
             #if model_name == "normal":
             #    model_name = "sentence-transformers/all-MiniLM-L6-v2"

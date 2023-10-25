@@ -4,11 +4,11 @@
 
 VectorDB is a lightweight, low-latency Python package for storing and retrieving text using chunking, embedding, and vector search techniques. It provides an easy-to-use interface for saving, searching, and managing textual data with associated metadata and is designed for use cases where low latency is essential.
 
-Because of low latency and memory footpring, VectorDB is used to power AI features inside [Kagi search](https://kagi.com).
+Thanks to low latency and memory footprint, VectorDB is used to power AI features inside [Kagi search](https://kagi.com).
 
 ## Installation
 
-To install VectorDB, use pip (note vectordb2 package name):
+To install VectorDB, use pip:
 
 ```
 pip install vectordb2
@@ -16,7 +16,7 @@ pip install vectordb2
 
 ## Usage
 
-Here's a quick example of how to use VectorDB:
+Quick example that loads data into memory, and runs retrieval. All data will be handled locally, including embeddings and vector search, completely trasparent for the user with maximum possible performance. 
 
 ```
 from vectordb import Memory
@@ -50,8 +50,7 @@ print(results)
 
 ```
 
-## Methods
-Memory provides the following methods:
+## Options
 
 
 **Memory(memory_file=None, chunking_strategy={"mode":"sliding_window"},
@@ -70,8 +69,10 @@ embeddings="normal")**
    `fast` - Uses Universal Sentence Encoder 4\
    `normal` - Uses "BAAI/bge-small-en-v1.5" (default)\
    `best` - Uses "BAAI/bge-large-en-v1.5"
+   `multilingual` - Uses Universal Sentence Encoder Multilingual Large 3\
 
-   or specify a custom HuggingFace model by name eg. `TaylorAI/bge-micro-v2`. See also [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
+
+   You can also specify a custom HuggingFace model by name eg. `TaylorAI/bge-micro-v2`. See also [Pretrained models](https://www.sbert.net/docs/pretrained_models.html) and [MTEB](https://huggingface.co/spaces/mteb/leaderboard).
 
 **Memory.save(texts, metadata, memory_file=None)**
 
@@ -201,9 +202,10 @@ Output:
 
 ```
 
-## Embeddings performance
+## Embeddings performance analysis
 
-Models are evaulated using standaridzed embeddings benchmarks (higher is better). Data pulled from [MTEB](https://huggingface.co/spaces/mteb/leaderboard). Average latency measured on CPU (lower is better).
+
+We evaluate embeddings models using standaridized benchmarks (higher is better). Average latency measured on CPU (lower is better). Benchmark data pulled from [MTEB](https://huggingface.co/spaces/mteb/leaderboard). 
 
 
 
@@ -230,9 +232,9 @@ Models are evaulated using standaridzed embeddings benchmarks (higher is better)
 
 
 
-## Vector search performance
+## Vector search performance analysis
 
-VectorDB is optimized for speed of retrieval and automatically uses [Faiss](https://github.com/facebookresearch/faiss) for low number of chunks (<4000) and [mrpt](https://github.com/vioshyvo/mrpt) for high number of chunks to ensure maximum performance across the spectrum of use cases.
+VectorDB is optimized for speed of retrieval. We automatically uses [Faiss](https://github.com/facebookresearch/faiss) for low number of chunks (<4000) and [mrpt](https://github.com/vioshyvo/mrpt) for high number of chunks to ensure maximum performance across the spectrum of use cases.
 
 ![Vector search engine comparison](images/comparison.png)
 
