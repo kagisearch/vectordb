@@ -68,7 +68,7 @@ embeddings="normal")**
    Options:\
    `fast` - Uses Universal Sentence Encoder 4\
    `normal` - Uses "BAAI/bge-small-en-v1.5" (default)\
-   `best` - Uses "BAAI/bge-large-en-v1.5"
+   `best` - Uses "BAAI/bge-base-en-v1.5"
    `multilingual` - Uses Universal Sentence Encoder Multilingual Large 3\
 
 
@@ -217,6 +217,7 @@ We evaluate embeddings models using standaridized benchmarks (higher is better).
 | BAAI/bge-base-en-v1.5                          | 6.48 s   | 82.4        | 75.53       | 45.77       | 86.55       |
 | BAAI/bge-small-en-v1.5                         | 1.85 s   | 81.59       | 74.14       | 43.82       | 84.92       |
 | TaylorAI/bge-micro-v2                          | 0.671 s  | 78.65       | 68.04       | 39.18       | 82.81       |
+| TaylorAI/gte-tiny                              | 1.25 s   | 80.46       | 70.35       | 42.09       | 82.83       |
 | thenlper/gte-base                              | 6.28 s   | 82.3        | 73.01       | 46.2        | 84.57       |
 | thenlper/gte-small                             | 2.14 s   | 82.07       | 72.31       | 44.89       | 83.54       |
 | universal-sentence-encoder-large/5             | 0.769 s  | 74.05       | 67.9        | 37.82       | 79.53       |
