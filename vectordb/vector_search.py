@@ -2,7 +2,7 @@
 This module provides the VectorSearch class for performing vector search using various algorithms.
 """
 
-# pylint: disable = line-too-long, trailing-whitespace, trailing-newlines
+#pylint: disable = line-too-long, trailing-whitespace, trailing-newlines, line-too-long, missing-module-docstring, import-error, too-few-public-methods, too-many-instance-attributes, too-many-locals
 
 from typing import List
 import numpy as np

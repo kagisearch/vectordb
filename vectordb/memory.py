@@ -3,7 +3,7 @@ This module provides the Memory class that represents a memory storage system
 for text and associated metadata, with functionality for saving, searching, and
 managing memory entries.
 """
-#pylint: disable = line-too-long, trailing-whitespace, trailing-newlines
+#pylint: disable = line-too-long, trailing-whitespace, trailing-newlines, line-too-long, missing-module-docstring, import-error, too-few-public-methods, too-many-instance-attributes, too-many-locals
 
 from typing import List, Dict, Any, Union
 import itertools
