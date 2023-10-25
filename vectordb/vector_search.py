@@ -4,10 +4,12 @@ This module provides the VectorSearch class for performing vector search using v
 
 #pylint: disable = line-too-long, trailing-whitespace, trailing-newlines, line-too-long, missing-module-docstring, import-error, too-few-public-methods, too-many-instance-attributes, too-many-locals
 
-from typing import List
+from typing import List, Tuple
 import numpy as np
 import faiss
 import sklearn
+
+
 
 MRPT_LOADED = True
 try:
@@ -61,7 +63,7 @@ class VectorSearch:
     @staticmethod
     def search_vectors(
         query_embedding: List[float], embeddings: List[List[float]], top_n: int
-    ) -> List[tuple[int, float]]:
+    ) -> List[Tuple[int, float]]:
         """
         Searches for the most similar vectors to the query_embedding in the given embeddings.
 
