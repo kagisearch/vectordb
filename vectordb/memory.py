@@ -163,7 +163,7 @@ class Memory:
             embeddings = [entry["embedding"] for entry in self.memory]
 
         indices = self.vector_search.search_vectors(query_embedding, embeddings, top_n)
-
+        print(indices)
         if unique:
             unique_indices = []
             seen_text_indices = set()  # Change the variable name

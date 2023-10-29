@@ -28,41 +28,48 @@ class VectorSearch:
     """
 
     @staticmethod
-    def run_mrpt(vector, vectors, k=15):
-        """
-        Search for the most similar vectors using MRPT method.
-        """
-        if isinstance(vector, list):
-            vector = np.array(vector).astype(np.float32)
-        index = mrpt.MRPTIndex(vectors)
-        res = index.exact_search(vector, k, return_distances=True)
-        return res[0].tolist(), res[1].tolist()
+    def run_mrpt(vector, vectors, k=15, batch_results="default"):
+            """
+            Search for the most similar vectors using MRPT method.
+            """
+            index = mrpt.MRPTIndex(vectors)
+            
+            if isinstance(vector, (list, np.ndarray)) and len(np.shape(vector)) > 1: # If vector is a list of vectors
+                res = index.exact_search(np.array(vector).astype(np.float32), k, return_distances=True)
+                
+                if batch_results== "flatten":
+                    return get_unique_k_elements(res[0], res[1], k, diverse=False)
+                elif batch_results== "diverse":
+                   return get_unique_k_elements(res[0], res[1], k, diverse=True)
+     
+                return res[0].tolist(), res[1].tolist()
+            else:
+                res = index.exact_search(np.array(vector).astype(np.float32), k, return_distances=True)
+                return res[0].tolist(), res[1].tolist()
 
     @staticmethod
-    def run_faiss(vector, vectors, k=15):
+    def run_faiss(vector, vectors, k=15, batch_results="default"):
         """
         Search for the most similar vectors using Faiss method.
         """
         index = faiss.IndexFlatL2(vectors.shape[1])
         index.add(vectors)
-        dis, indices = index.search(np.array([vector]), k)
-        return indices[0], dis[0]
+        
+        if isinstance(vector, (list, np.ndarray)) and len(np.shape(vector)) > 1:  # If vector is a list of vectors
+            dis, indices = index.search(np.array(vector), k)
+            if batch_results== "flatten":
+                return get_unique_k_elements(indices, dis, k, diverse=False)
+            elif batch_results== "diverse":
+               return get_unique_k_elements(indices, dis, k, diverse=True) 
+            return indices, dis
+        else:
+            dis, indices = index.search(np.array([vector]), k)
+            return indices[0], dis[0]
 
-    @staticmethod
-    def run_sk(vector, vectors, k=15):
-        """
-        Search for the most similar vectors using scikit-learn method.
-        """
-        similarities = sklearn.metrics.pairwise_distances(
-            [vector], vectors, metric="euclidean", n_jobs=-1
-        )
-        partition_indices = np.argpartition(similarities[0], k)
-        indices = partition_indices[:k]
-        return indices
-
+  
     @staticmethod
     def search_vectors(
-        query_embedding: List[float], embeddings: List[List[float]], top_n: int
+        query_embedding: List[float], embeddings: List[List[float]], top_n: int, batch_results: str = "default"
     ) -> List[Tuple[int, float]]:
         """
         Searches for the most similar vectors to the query_embedding in the given embeddings.
@@ -70,6 +77,7 @@ class VectorSearch:
         :param query_embedding: a list of floats representing the query vector.
         :param embeddings: a list of vectors to be searched, where each vector is a list of floats.
         :param top_n: the number of most similar vectors to return.
+        :param batch_results: when input is a list of vectors, output can be "default", "flatten" or "diverse".
         :return: a list of indices of the top_n most similar vectors in the embeddings.
         """
         if isinstance(embeddings, list):
@@ -80,6 +88,6 @@ class VectorSearch:
         else:
             call_search = VectorSearch.run_mrpt
 
-        indices, dis = call_search(query_embedding, embeddings, top_n)
+        indices, dis = call_search(query_embedding, embeddings, top_n, batch_results)
 
         return list(zip(indices, dis))
