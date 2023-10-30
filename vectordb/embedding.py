@@ -2,7 +2,7 @@
 This module provides classes for generating text embeddings using various pre-trained models.
 """
 
-#pylint: disable = line-too-long, trailing-whitespace, trailing-newlines, line-too-long, missing-module-docstring, import-error, too-few-public-methods, too-many-instance-attributes, too-many-locals
+# pylint: disable = line-too-long, trailing-whitespace, trailing-newlines, line-too-long, missing-module-docstring, import-error, too-few-public-methods, too-many-instance-attributes, too-many-locals
 
 from abc import ABC, abstractmethod
 from typing import List
@@ -13,10 +13,10 @@ from sentence_transformers import SentenceTransformer
 
 class BaseEmbedder(ABC):
     """Base class for Embedder."""
+
     @abstractmethod
     def embed_text(self, chunks: List[str]) -> List[List[float]]:
         """Generates embeddings for a list of text chunks."""
-
 
 
 class Embedder(BaseEmbedder):
@@ -39,19 +39,16 @@ class Embedder(BaseEmbedder):
                 "https://tfhub.dev/google/universal-sentence-encoder/4"
             )
             self.sbert = False
-        elif model_name == "multilingual" :
-            self.model = hub.load(
-                "universal-sentence-encoder-multilingual-large/3"
-            )
+        elif model_name == "multilingual":
+            self.model = hub.load("universal-sentence-encoder-multilingual-large/3")
             self.sbert = False
         else:
-            #if model_name == "normal":
+            # if model_name == "normal":
             #    model_name = "sentence-transformers/all-MiniLM-L6-v2"
             if model_name == "normal":
                 model_name = "BAAI/bge-small-en-v1.5"
             elif model_name == "best":
                 model_name = "BAAI/bge-base-en-v1.5"
-                
 
             self.model = SentenceTransformer(model_name)
 

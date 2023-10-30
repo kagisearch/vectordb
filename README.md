@@ -85,13 +85,14 @@ Save content to memory. Metadata will be automatically optimized to use less res
 - `metdata`: *Optional.* Metadata or list of metadata associated with the texts.
 - `memory_file`: *Optional.* Path to persist the memory file. By default 
 
-**Memory.search(query, top_n=5, unique=False)**
+**Memory.search(query, top_n=5, unique=False, batch_results="flatten")**
 
 Search inside memory.
 
-- `query`: *Required.* Query text.
+- `query`: *Required.* Query text or  list of queries (see `batch_results` option below for handling results for a list).
 - `top_n`:  *Optional.* Number of most similar chunks to return (default: 5).
 - `unique`:  *Optional.* Return only items chunks from unique original texts (additional chunks coming from the same text will be ignored). Note this may return less chhunks than requested (default: False).
+- `batch_results`:  *Optional.* When input is a list of queries, output algorithm can be "flatten" or "diverse". Flatten returns true nearest neighbours across all input queries, meaning all results could come from just one query. "diverse" attempts to spread out the results, so that each query's nearest neighbours are equally added (neareast first across all queries, than 2nd nearest and so on). (default: "flatten")
 
 **Memory.clear()**
 
