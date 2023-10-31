@@ -39,9 +39,9 @@ class Memory:
             self.memory = []
             self.metadata_memory = []
         else:
-            load = Storage(memory_file).load_from_disk()            
-            self.memory = [] if len(load) != 2 else load[0]
-            self.metadata_memory = [] if len(load) != 2 else load[1]
+            load = Storage(memory_file).load_from_disk()       
+            self.memory = [] if len(load) != 1 else load[0]["memory"]
+            self.metadata_memory = [] if len(load) != 1 else load[0]["metadata"]
 
         if chunking_strategy is None:
             chunking_strategy = {"mode": "sliding_window"}
@@ -130,7 +130,7 @@ class Memory:
                 self.memory.append(entry)
 
         if memory_file is not None:
-            Storage(self.memory_file).save_to_disk([self.memory, self.metadata_memory])
+            Storage(self.memory_file).save_to_disk([{"memory": self.memory, "metadata" :self.metadata_memory}])
 
     def search(
         self, query: str, top_n: int = 5, unique: bool = False, batch_results: str = "flatten"
@@ -191,7 +191,7 @@ class Memory:
         self.text_index_counter = 0
 
         if self.memory_file is not None:
-            Storage(self.memory_file).save_to_disk([self.memory, self.metadata_memory])
+            Storage(self.memory_file).save_to_disk([{"memory": self.memory, "metadata" :self.metadata_memory}])
 
     def dump(self):
         """
