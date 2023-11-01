@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="vectordb2",
-    version="0.1.8.1",
+    version="0.1.9",
     packages=find_packages(),
     install_requires=[
         "torch>=1.9.0",
