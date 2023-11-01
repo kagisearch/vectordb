@@ -231,7 +231,10 @@ We constantly evaluate embedding models using standardized benchmarks (higher is
 | universal-sentence-encoder-multilingual/3      | 0.162 s  | 75.39       | 63.42       | 34.82       | 75.43       |
 | universal-sentence-encoder/4                   | 0.019 s  | 72.04       | 64.45       | 35.71       | 76.23       |
 
-![Embeddings Latency](images/latency.png)
+![Embeddings Latency on CPU](images/speed_cpu.png)
+
+![Embeddings Latency on GPU](images/speed_gpu.png)
+
 
 ![Embeddings Quality](images/quality.png)
 
