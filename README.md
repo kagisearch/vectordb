@@ -24,10 +24,9 @@ from vectordb import Memory
 # Memory is where all content you want to store/search goes.
 memory = Memory()
 
-# You can save a list of items, and associate any kind of metadata with it (optional)
 memory.save(
-    ["apples are green", "oranges are orange"],
-    [{"url": "https://apples.com"}, {"url": "https://oranges.com"}],
+    ["apples are green", "oranges are orange"],  # save your text content. for long text we will automatically chunk it
+    [{"url": "https://apples.com"}, {"url": "https://oranges.com"}], # associate any kind of metadata with it (optional)
 )
 
 # Search for top n relevant results, automatically using embeddings
