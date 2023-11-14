@@ -42,7 +42,7 @@ This returns the chunks with the added metadata and the vector distance (where 0
 [
   {
     "chunk": "apples are green",
-    "metadata": {},
+    "metadata": {"url": "https://apples.com"},
     "distance": 0.87
   }
 ]
