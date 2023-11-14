@@ -2,7 +2,7 @@
 
 [![](https://dcbadge.vercel.app/api/server/aDNg6E9szy?compact=true&style=flat)](https://discord.gg/aDNg6E9szy) [![Twitter](https://img.shields.io/twitter/follow/KagiHQ?style=social)](https://twitter.com/KagiHQ) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/license/mit/) 
 
-VectorDB is a lightweight, fully local, end-to-end solution for using embeddings embeddings for storing and retrieving text content. 
+VectorDB is a simple, lightweight, fully local, end-to-end solution for using embeddings-based text retrieval.
 
 Thanks to its low latency and small memory footprint, VectorDB is used to power AI features inside [Kagi search](https://kagi.com).
 
