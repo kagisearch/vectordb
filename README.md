@@ -21,20 +21,17 @@ Quick example that loads data into memory, and runs retrieval. All data will be 
 ```
 from vectordb import Memory
 
+# Memory is where all content you want to store/search goes.
 memory = Memory()
 
-# Memory is where all content you want to store/search goes. Saving to memory is super simple
-memory.save("Hello world")
-
-
-# You can save a list of items, and associate any kind of metadata with it
+# You can save a list of items, and associate any kind of metadata with it (optional)
 memory.save(
     ["apples are green", "oranges are orange"],
     [{"url": "https://apples.com"}, {"url": "https://oranges.com"}],
 )
 
 # Search for top n relevant results, automatically using embeddings
-query = "hello"
+query = "green"
 results = memory.search(query, top_n = 1)
 
 print(results)
@@ -45,7 +42,7 @@ This returns the chunks with the added metadata and the vector distance (where 0
 ```
 [
   {
-    "chunk": "Hello world",
+    "chunk": "apples are green",
     "metadata": {},
     "distance": 0.87
   }
