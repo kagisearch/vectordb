@@ -4,7 +4,7 @@
 
 VectorDB is a simple, lightweight, fully local, end-to-end solution for using embeddings-based text retrieval.
 
-Thanks to its low latency and small memory footprint, VectorDB is used to power AI features inside [Kagi search](https://kagi.com).
+Thanks to its low latency and small memory footprint, VectorDB is used to power AI features inside [Kagi Search](https://kagi.com).
 
 ## Installation
 
