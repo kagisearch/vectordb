@@ -6,6 +6,9 @@ VectorDB is a simple, lightweight, fully local, end-to-end solution for using em
 
 Thanks to its low latency and small memory footprint, VectorDB is used to power AI features inside [Kagi Search](https://kagi.com).
 
+Check an [example Colab notebook](https://colab.research.google.com/drive/1pecKGCCru_Jvx7v0WRNrW441EBlcS5qS#scrollTo=Eh6o8m7d8eOk) where this is used to filter the content of [Kagi Small Web](https://kagi.com/smallweb) RSS feed based on stated user interests.
+
+
 ## Installation
 
 To install VectorDB, use pip:
