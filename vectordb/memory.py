@@ -133,7 +133,7 @@ class Memory:
             Storage(self.memory_file).save_to_disk([{"memory": self.memory, "metadata" :self.metadata_memory}])
 
     def search(
-        self, query: str, top_n: int = 5, unique: bool = False, batch_results: str = "flatten"
+            self, query: str, top_n: int = 5, unique: bool = False, batch_results: str = "flatten", context: int = 0
     ) -> List[Dict[str, Any]]:
         """
         Searches for the most similar chunks to the given query in memory.
@@ -170,14 +170,19 @@ class Memory:
                     )  # Use seen_text_indices instead of seen_meta_indices
             indices = unique_indices
 
-        results = [
-            {
-                "chunk": self.memory[i[0]]["chunk"],
-                "metadata": self.metadata_memory[self.memory[i[0]]["metadata_index"]],
-                "distance": i[1],
-            }
-            for i in indices
-        ]
+        results = []
+        for i in indices:
+            chunk_with_context = ""
+            for j in range(-context, context+1):
+                chunk_with_context += self.memory[i[0]+j]["chunk"] if i[0]+j >= 0 and i[0]+j < len(self.memory) else ""
+            results += [
+                {
+                    "chunk": chunk_with_context,
+                    "metadata": self.metadata_memory[self.memory[i[0]]["metadata_index"]],
+                    "distance": i[1],
+                }
+            ]
+
 
         return results
 
