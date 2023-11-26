@@ -21,7 +21,7 @@ pip install vectordb2
 
 Quick example that loads data into memory, and runs retrieval. All data will be handled locally, including embeddings and vector search, completely trasparent for the user with maximum possible performance. 
 
-```
+```python
 from vectordb import Memory
 
 # Memory is where all content you want to store/search goes.
@@ -41,7 +41,7 @@ print(results)
 
 This returns the chunks with the added metadata and the vector distance (where 0 is the exact match and higher means further apart)
 
-```
+```json
 [
   {
     "chunk": "apples are green",
@@ -49,7 +49,6 @@ This returns the chunks with the added metadata and the vector distance (where 0
     "distance": 0.87
   }
 ]
-
 ```
 
 ## Options
@@ -105,7 +104,7 @@ Prints the contents of the memory.
 
 ## Example
 
-```
+```python
 from vectordb import Memory
 
 memory = Memory(
@@ -185,7 +184,7 @@ print(results)
 ```
 
 Output:
-```
+```json
 [
   {
     "chunk": "Artificial intelligence (AI) is the simulation of human intelligence in machines that are programmed to think like humans and mimic their actions. The term may also be applied to any machine that exhibits traits associated with a human mind such as learning and problem-solving. AI research has been highly successful in developing effective techniques for solving a wide range of problems, from game playing to medical diagnosis. However, there is still a long way to go before AI can truly match the intelligence of humans. One of the main challenges is that human intelligence is incredibly complex and poorly understood. Despite the challenges, AI is a rapidly growing field with the potential to revolutionize many aspects of our lives. Some of the potential benefits of AI include: Increased",
