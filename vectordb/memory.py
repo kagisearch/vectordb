@@ -39,7 +39,7 @@ class Memory:
             self.memory = []
             self.metadata_memory = []
         else:
-            load = Storage(memory_file).load_from_disk()       
+            load = Storage(memory_file).load_from_disk()
             self.memory = [] if len(load) != 1 else load[0]["memory"]
             self.metadata_memory = [] if len(load) != 1 else load[0]["metadata"]
 
@@ -150,8 +150,9 @@ class Memory:
         else:
             query_embedding = self.embedder.embed_text([query])[0]
 
-        
         embeddings = [entry["embedding"] for entry in self.memory]
+        if len(embeddings) == 0:
+            return []
 
         indices = self.vector_search.search_vectors(query_embedding, embeddings, top_n, batch_results)
         if unique:
