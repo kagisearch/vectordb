@@ -7,7 +7,6 @@ This module provides the VectorSearch class for performing vector search using v
 from typing import List, Tuple
 import numpy as np
 import faiss
-import sklearn
 
 
 MRPT_LOADED = True
@@ -28,6 +27,9 @@ class VectorSearch:
 
     @staticmethod
     def get_unique_k_elements(i, d, k=15, diverse=False):
+        """
+        Return a tuple of arrays containing unique matching elements
+        """
         ii, dd = [], []
         num_rows, num_cols = i.shape
 
@@ -72,11 +74,10 @@ class VectorSearch:
                 )
 
             return VectorSearch.get_unique_k_elements(res[0], res[1], k, diverse=False)
-        else:
-            res = index.exact_search(
-                np.array(vector).astype(np.float32), k, return_distances=True
-            )
-            return res[0].tolist(), res[1].tolist()
+        res = index.exact_search(
+            np.array(vector).astype(np.float32), k, return_distances=True
+        )
+        return res[0].tolist(), res[1].tolist()
 
     @staticmethod
     def run_faiss(vector, vectors, k=15, batch_results="flatten"):
@@ -95,9 +96,8 @@ class VectorSearch:
             if batch_results == "diverse":
                 return VectorSearch.get_unique_k_elements(indices, dis, k, diverse=True)
             return VectorSearch.get_unique_k_elements(indices, dis, k, diverse=False)
-        else:
-            dis, indices = index.search(np.array([vector]), k)
-            return indices[0], dis[0]
+        dis, indices = index.search(np.array([vector]), k)
+        return indices[0], dis[0]
 
     @staticmethod
     def search_vectors(
