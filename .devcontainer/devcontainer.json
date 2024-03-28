@@ -1,34 +1,20 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 {
-  "image": "quay.io/pangeo/base-image:latest",
+  "build": { "dockerfile": "Dockerfile" },
 
   "customizations": {
     "vscode": {
-      "extensions": ["ms-toolsai.jupyter", "ms-python.python"]
+      "extensions": [
+        "ms-toolsai.jupyter",
+        "ms-python.python"
+      ]
     }
   },
   "postCreateCommand": "sh .devcontainer/postBuild.sh",
   "features": {
-    "ghcr.io/devcontainers-contrib/features/black:2": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers-contrib/features/pylint:2": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/git:1": {
-      "ppa": true,
-      "version": "latest"
-    },
+    "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
     "ghcr.io/devcontainers-contrib/features/ncdu:1": {},
-    "ghcr.io/devcontainers-contrib/features/wget-apt-get:1": {},
-    "ghcr.io/devcontainers/features/python:1": {
-      "installTools": true,
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/conda:1": {
-      "addCondaForge": true,
-      "version": "latest"
+    "ghcr.io/devcontainers-contrib/features/wget-apt-get:1": {}
     }
-  }
 }
