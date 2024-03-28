@@ -17,7 +17,7 @@ concurrency:
 
 env:
   FORCE_COLOR: 3
-  PROJECT_NAME: "caustics"
+  PROJECT_NAME: "vectordb2"
 
 jobs:
   build:
