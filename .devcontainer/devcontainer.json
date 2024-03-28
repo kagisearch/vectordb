@@ -10,5 +10,13 @@
 		]
 		}
 	},
-	"postCreateCommand": "sh .devcontainer/postBuild.sh"
+	"postCreateCommand": "sh .devcontainer/postBuild.sh",
+	"features": {
+		"ghcr.io/devcontainers-contrib/features/black:2": {},
+		"ghcr.io/devcontainers-contrib/features/pylint:2": {},
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
+		"ghcr.io/devcontainers-contrib/features/ncdu:1": {},
+      		"ghcr.io/devcontainers-contrib/features/wget-apt-get:1": {}
+    }
 }
