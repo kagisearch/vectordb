@@ -1,0 +1,17 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+  - file: getting_started
+  - file: install
+  - file: examples/index
+    sections:
+      - file: examples/Example_ImageFit_LM
+  - file: contributing
+  - file: citation
+  - file: license
+  - file: modules
+  - file: glossary
+  - file: genindex

@@ -60,8 +60,8 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-[connor.stone@mila.quebec](mailto:connor.stone@mila.quebec). All complaints will
-be reviewed and investigated promptly and fairly.
+[connor.stone@mila.quebec](mailto:vlad@kagi.com). All complaints will be
+reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
 reporter of any incident.
