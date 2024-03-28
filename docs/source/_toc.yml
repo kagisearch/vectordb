@@ -8,10 +8,7 @@ chapters:
   - file: install
   - file: examples/index
     sections:
-      - file: examples/Example_ImageFit_LM
+      - file: examples/ai_rss_reader
   - file: contributing
-  - file: citation
   - file: license
-  - file: modules
-  - file: glossary
   - file: genindex
