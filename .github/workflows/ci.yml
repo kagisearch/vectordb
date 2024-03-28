@@ -1,0 +1,74 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - dev
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: 3
+  PROJECT_NAME: "caustics"
+
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+      - name: Checkout caustics
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+
+      - name: Record State
+        run: |
+          pwd
+          echo github.ref is: ${{ github.ref }}
+          echo GITHUB_SHA is: $GITHUB_SHA
+          echo github.event_name is: ${{ github.event_name }}
+          echo github workspace: ${{ github.workspace }}
+          pip --version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov torch wheel
+
+      # We only want to install this on one run, because otherwise we'll have
+      # duplicate annotations.
+      - name: Install error reporter
+        if: ${{ matrix.python-version == '3.10' }}
+        run: |
+          python -m pip install pytest-github-actions-annotate-failures
+
+      - name: Install Caustics
+        run: |
+          pip install -e ".[dev]"
+          pip show ${{ env.PROJECT_NAME }}
+
+      - name: Test with pytest
+        run: |
+          pytest -vvv --cov=${{ env.PROJECT_NAME }} --cov-report=xml --cov-report=term tests/
+
+      - name: Upload coverage reports to Codecov with GitHub Action
+        uses: codecov/codecov-action@v4

@@ -33,7 +33,7 @@ class Embedder(BaseEmbedder):
         for embeddings.
         """
         self.sbert = True
-        print("Initiliazing embeddings: ", model_name)
+        print("Initializing embeddings: ", model_name)
         if model_name == "fast":
             self.model = hub.load(
                 "https://tfhub.dev/google/universal-sentence-encoder/4"
