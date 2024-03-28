@@ -1,22 +1,19 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 {
-	"image":"quay.io/pangeo/base-image:latest",
+  "image": "quay.io/pangeo/base-image:latest",
 
-	"customizations": {
-		"vscode": {
-		  "extensions": [
-			"ms-toolsai.jupyter",
-			"ms-python.python"
-		]
-		}
-	},
-	"postCreateCommand": "sh .devcontainer/postBuild.sh",
-	"features": {
-		"ghcr.io/devcontainers-contrib/features/black:2": {},
-		"ghcr.io/devcontainers-contrib/features/pylint:2": {},
-		"ghcr.io/devcontainers/features/git:1": {},
-		"ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
-		"ghcr.io/devcontainers-contrib/features/ncdu:1": {},
-      		"ghcr.io/devcontainers-contrib/features/wget-apt-get:1": {}
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-toolsai.jupyter", "ms-python.python"]
     }
+  },
+  "postCreateCommand": "sh .devcontainer/postBuild.sh",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/black:2": {},
+    "ghcr.io/devcontainers-contrib/features/pylint:2": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
+    "ghcr.io/devcontainers-contrib/features/ncdu:1": {},
+    "ghcr.io/devcontainers-contrib/features/wget-apt-get:1": {}
+  }
 }
