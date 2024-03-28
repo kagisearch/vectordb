@@ -1,0 +1,4 @@
+git
+ncdu
+wget
+curl
