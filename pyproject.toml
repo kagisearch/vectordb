@@ -7,7 +7,7 @@ name = "vectordb2"
 dynamic = ["version"]
 description = "A lightweight Python package for storing and retrieving text using chunking, embedding, and vector search"
 readme = "README.md"
-license = ""
+license = "LICENSE"
 authors = [
     { name = "Vladimir Prelovac", email = "vlad@kagi.com" },
 ]
@@ -45,9 +45,9 @@ dependencies = [
 Homepage = "https://github.com/kagisearch/vectordb"
 
 [tool.hatch.version]
-path = "vectordb/__init__.py"
+path = "/src/vectordb/__init__.py"
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "/vectordb",
+    "/src/vectordb",
 ]
