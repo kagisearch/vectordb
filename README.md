@@ -99,7 +99,8 @@ Save content to memory. Metadata will be automatically optimized to use less
 resources.
 
 - `texts`: _Required._ Text or list of texts to be saved.
-- `metadata`: _Optional._ Metadata or list of metadata associated with the texts.
+- `metadata`: _Optional._ Metadata or list of metadata associated with the
+  texts.
 - `memory_file`: _Optional._ Path to persist the memory file. By default
 
 **Memory.search(query, top_n=5, unique=False, batch_results="flatten")**
