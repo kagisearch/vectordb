@@ -1,8 +1,8 @@
-faiss-cpu,
-numpy>=1.21.0,
-scikit-learn>=0.24.0,
-scipy>=1.7.0,
-sentence_transformers,
+faiss-cpu
+numpy>=1.21.0
+scikit-learn>=0.24.0
+scipy>=1.7.0
+sentence_transformers
 tensorflow_text
-torch>=1.9.0,
-transformers>=4.10.0,
+torch>=1.9.0
+transformers>=4.10.0

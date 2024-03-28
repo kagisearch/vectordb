@@ -1,13 +1,17 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-requirements-txt", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
 name = "vectordb2"
-dynamic = ["version"]
+dynamic = [
+    "dependencies",
+    "version"
+]
 description = "A lightweight Python package for storing and retrieving text using chunking, embedding, and vector search"
 readme = "README.md"
-license = "LICENSE"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
 authors = [
     { name = "Vladimir Prelovac", email = "vlad@kagi.com" },
 ]
@@ -30,24 +34,38 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
 ]
-dependencies = [
-    "faiss-cpu",
-    "numpy>=1.21.0",
-    "scikit-learn>=0.24.0",
-    "scipy>=1.7.0",
-    "sentence_transformers",
-    "tensorflow_text",
-    "torch>=1.9.0",
-    "transformers>=4.10.0",
-]
 
 [project.urls]
 Homepage = "https://github.com/kagisearch/vectordb"
 
-[tool.hatch.version]
-path = "/src/vectordb/__init__.py"
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0,<9",
+    "pytest-cov>=4.1,<5",
+    "pytest-mock>=3.12,<4",
+    "pre-commit>=3.6,<4"
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "/src/vectordb",
+    "src/vectordb",
 ]
+
+[tool.hatch.metadata.hooks.requirements_txt]
+files = ["requirements.txt"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/vectordb/_version.py"
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
+
+[tool.ruff]
+# Same as Black.
+line-length = 100
