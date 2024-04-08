@@ -29,7 +29,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - name: Checkout caustics
+      - name: Checkout vectordb
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -61,7 +61,7 @@ jobs:
         run: |
           python -m pip install pytest-github-actions-annotate-failures
 
-      - name: Install Caustics
+      - name: Install vectordb
         run: |
           pip install -e ".[dev]"
           pip show ${{ env.PROJECT_NAME }}
