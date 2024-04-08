@@ -1,11 +1,21 @@
-# Use the Pangeo base image
-ARG PANGEO_BASE_IMAGE_TAG=master
-FROM pangeo/base-image:${PANGEO_BASE_IMAGE_TAG}
+# Use the latest version of the pangeo/base-notebook (includes CUDA support)
+FROM pangeo/base-notebook:latest
 
-# Copy the environment.yaml file into the Docker image
-COPY environment.yaml /tmp/environment.yaml
+# Set the user to root
+USER root
 
-# Use the conda command to create a new environment from the environment.yaml file
-RUN conda env create -f ~/.devcontainer/environment.yaml
-RUN conda init bash
-RUN echo "conda activate ssec-scipy2024" >> ~/.bashrc
+# Copy the environment and requirements files into the Docker image
+COPY environment.yml /tmp/environment.yml
+COPY requirements.txt /tmp/requirements.txt
+
+# Create a new Conda environment from the environment.yml file
+RUN conda env create -f /tmp/environment.yml
+
+# Install wget, git, ncdu, and curl
+RUN apt-get update && apt-get install -y \
+    wget \
+    git \
+    ncdu \
+    curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
