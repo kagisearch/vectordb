@@ -3,7 +3,7 @@ requires = ["hatchling", "hatch-requirements-txt", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
-name = "vectordb2"
+name = "vectordb"
 dynamic = [
     "dependencies",
     "version"

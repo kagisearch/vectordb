@@ -17,3 +17,4 @@ dependencies:
   - pip
   - pip:
     - tensorflow_text
+    - git+https://github.com/vioshyvo/mrpt/
