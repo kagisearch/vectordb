@@ -1,5 +1,7 @@
 faiss-cpu
+nox
 numpy
+pre-commit
 scikit-learn
 scipy
 sentence_transformers

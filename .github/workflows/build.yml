@@ -1,0 +1,89 @@
+# Any commit to master branch re-builds images, re-runs tests, and pushes SHA tags to DockerHub
+name: Build
+on:
+  push:
+    branches:
+      - main
+      - pre-commit
+    paths-ignore:
+      - 'LICENSE'
+      - 'README.md'
+  workflow_dispatch:
+
+env:
+  DOCKER_REGISTRY: ghcr.io
+  DOCKER_ORG: ${{ github.repository_owner }}
+  GITHUB_SHA: ${{ github.sha }}
+  GITHUB_REF: ${{ github.ref }}
+
+jobs:
+    build-images:
+      runs-on: ubuntu-latest
+      permissions:
+        contents: read
+        packages: write
+      strategy:
+        fail-fast: false
+        matrix:
+          IMAGE: [docker]
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      - name: Get date tag
+        id: get_date
+        run: |
+          DATE_TAG="$( date -u '+%Y.%m.%d' )"
+          echo "date_tag=$DATE_TAG" >> $GITHUB_OUTPUT
+      
+      - name: Get registry and org
+        id: registry_org
+        run: |
+          ORG=$(echo "${{ env.DOCKER_ORG }}" | tr '[:upper:]' '[:lower:]')
+          echo "image_base=${{ env.DOCKER_REGISTRY }}/${ORG}" >> $GITHUB_OUTPUT
+      
+      # https://github.com/actions/runner-images/issues/2840#issuecomment-790492173
+      - name: Free up disk space
+        run: |
+          df -h
+          docker image ls
+          sudo apt clean
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -h
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ steps.registry_org.outputs.image_base }}/${{ matrix.IMAGE }}
+          tags: |
+            # set latest tag for default branch
+            type=raw,value=latest
+            type=raw,value=${{ steps.get_date.outputs.date_tag }}
+
+      - name: Log in to registry
+        uses: docker/login-action@v2
+        with:
+            registry: ${{ env.DOCKER_REGISTRY }}
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+          
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ matrix.IMAGE }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+      
+      - name: Inspect Image
+        run: |
+            docker run ${{ steps.registry_org.outputs.image_base }}/${{ matrix.IMAGE }}:latest conda list
+            docker images ls
+      
+      - name: Test Image
+        run: |
+            docker run -u 1000 -w /srv/test -v $PWD:/srv/test ${{ steps.registry_org.outputs.image_base }}/${{ matrix.IMAGE }}:latest
