@@ -16,5 +16,5 @@ __all__ = [
     "Embedder",
     "Memory",
     "Storage",
-    "VectorStorage",
+    "VectorSearch",
 ]

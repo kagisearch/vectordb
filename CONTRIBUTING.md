@@ -1,4 +1,4 @@
-## Contributing to Vectordb
+# Contributing to Vectordb
 
 Thank you for your interest in contributing to vectordb! We welcome
 contributions from the community to help improve our project.
