@@ -8,10 +8,12 @@ dependencies:
   - numpy
   - scikit-learn
   - scipy
-  - sentence_transformers
-  - tensorflow_text
-  - torch
+  - sentence-transformers
+  - tensorflow-hub
+  - pytorch
   - transformers
   - pre-commit
   - nox
   - pip
+  - pip:
+    - tensorflow_text

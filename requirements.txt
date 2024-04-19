@@ -4,7 +4,8 @@ numpy
 pre-commit
 scikit-learn
 scipy
-sentence_transformers
+sentence-transformers
+tensorflow-hub
 tensorflow_text
 torch
 transformers
