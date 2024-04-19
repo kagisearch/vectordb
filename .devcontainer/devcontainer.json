@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 {
-  "build": { "dockerfile": "Dockerfile" },
+  "image": "ghcr.io/swarm-io-internal/docker:latest",
 
   "customizations": {
     "vscode": {
@@ -10,11 +10,5 @@
       ]
     }
   },
-  "postCreateCommand": "sh .devcontainer/postBuild.sh",
-  "features": {
-    "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
-    "ghcr.io/devcontainers-contrib/features/ncdu:1": {},
-    "ghcr.io/devcontainers-contrib/features/wget-apt-get:1": {}
-    }
+  "postCreateCommand": "sh .devcontainer/postBuild.sh"
 }
