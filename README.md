@@ -277,3 +277,85 @@ to ensure maximum performance across the spectrum of use cases.
 ## License
 
 MIT License.
+
+## Contributing
+
+We welcome contributions to VectorDB! Here are the instructions to set up your development environment.
+
+### Activating a Codespace
+
+1. On the main page of the repository, click the `Code` button.
+2. Click on `Open with Codespaces`.
+3. Click on `New Codespace`.
+
+### Using a Docker Container
+
+1. Ensure [Docker](https://www.docker.com/products/docker-desktop/) is installed on your machine.
+2. Pull the Docker image using the following command:
+
+```bash
+docker pull ghcr.io/swarm-io-internal/docker:latest --platform linux/x86_64
+```
+
+> Note: The "no matching manifest for linux/arm64/v8 in the manifest list entries" error occurs if you do not include the platform flag for Apple Silicon systems
+
+3. Run the Docker container:
+
+```bash
+docker run -p 8888:8888 --platform linux/x86_64 -it ghcr.io/swarm-io-internal/docker:latest bash
+```
+
+4. Clone the repository:
+
+```bash
+git clone https://github.com/kagisearch/vectordb.git
+```
+
+5. Navigate to the cloned repository:
+
+```
+cd vectordb
+```
+
+### Using a Conda Environment
+
+1. Ensure [Conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) is installed on your machine.
+2. Clone the repository:
+
+```bash
+git clone https://github.com/kagisearch/vectordb.git
+```
+
+3. Navigate to the cloned repository:
+
+```bash
+cd vectordb
+```
+
+4. Create the Conda environment:
+
+```bash
+conda env create -f ./docker/environment.yml
+```
+
+5. Initialize Conda:
+
+```bash
+conda init
+```
+
+5. Source the bashrc file:
+
+```bash
+. ~/.bashrc
+```
+
+6. Activate the Conda environment:
+
+```bash
+conda activate vectordb-dev
+```
+
+Please make sure to update tests as appropriate when making changes. Also, update the documentation reflecting the changes you made.
+
+Happy coding!
