@@ -16,5 +16,6 @@ RUN apt-get update && apt-get install -y \
     git \
     ncdu \
     curl \
+    build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
