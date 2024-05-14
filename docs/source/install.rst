@@ -1,4 +1,3 @@
-
 Installation
 ============
 
@@ -17,7 +16,7 @@ Developer Install
 
 First clone the repo with::
 
-    git clone git@github.com:Ciela-Institute/vectordb.git
+    git clone git@github.com:kagisearch/vectordb2.git
 
 this will create a directory ``vectordb`` wherever you ran the command. Next go into the directory and install in developer mode::
 
