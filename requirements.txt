@@ -1,0 +1,11 @@
+faiss-cpu
+nox
+numpy
+pre-commit
+scikit-learn
+scipy
+sentence-transformers
+tensorflow-hub
+tensorflow_text
+torch
+transformers

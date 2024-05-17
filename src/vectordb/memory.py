@@ -3,6 +3,7 @@ This module provides the Memory class that represents a memory storage system
 for text and associated metadata, with functionality for saving, searching, and
 managing memory entries.
 """
+
 # pylint: disable = line-too-long, trailing-whitespace, trailing-newlines, line-too-long, missing-module-docstring, import-error, too-few-public-methods, too-many-instance-attributes, too-many-locals
 
 from typing import List, Dict, Any, Union
@@ -130,10 +131,16 @@ class Memory:
                 self.memory.append(entry)
 
         if memory_file is not None:
-            Storage(self.memory_file).save_to_disk([{"memory": self.memory, "metadata" :self.metadata_memory}])
+            Storage(self.memory_file).save_to_disk(
+                [{"memory": self.memory, "metadata": self.metadata_memory}]
+            )
 
     def search(
-        self, query: str, top_n: int = 5, unique: bool = False, batch_results: str = "flatten"
+        self,
+        query: str,
+        top_n: int = 5,
+        unique: bool = False,
+        batch_results: str = "flatten",
     ) -> List[Dict[str, Any]]:
         """
         Searches for the most similar chunks to the given query in memory.
@@ -154,7 +161,9 @@ class Memory:
         if len(embeddings) == 0:
             return []
 
-        indices = self.vector_search.search_vectors(query_embedding, embeddings, top_n, batch_results)
+        indices = self.vector_search.search_vectors(
+            query_embedding, embeddings, top_n, batch_results
+        )
         if unique:
             unique_indices = []
             seen_text_indices = set()  # Change the variable name
@@ -192,7 +201,9 @@ class Memory:
         self.text_index_counter = 0
 
         if self.memory_file is not None:
-            Storage(self.memory_file).save_to_disk([{"memory": self.memory, "metadata" :self.metadata_memory}])
+            Storage(self.memory_file).save_to_disk(
+                [{"memory": self.memory, "metadata": self.metadata_memory}]
+            )
 
     def dump(self):
         """

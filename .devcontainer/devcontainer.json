@@ -1,0 +1,14 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+{
+  "image": "ghcr.io/swarm-io-internal/data-science-lite:latest",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-toolsai.jupyter",
+        "ms-python.python"
+      ]
+    }
+  },
+  "postCreateCommand": "sh .devcontainer/postBuild.sh"
+}

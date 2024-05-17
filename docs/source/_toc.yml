@@ -1,0 +1,14 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+  - file: getting_started
+  - file: install
+  - file: examples/index
+    sections:
+      - file: examples/ai_rss_reader
+  - file: contributing
+  - file: license
+  - file: genindex

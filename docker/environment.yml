@@ -1,0 +1,19 @@
+name: vectordb-dev
+channel:
+  - conda-forge
+  - defaults
+dependencies:
+  - python>=3.8,<3.12
+  - faiss-cpu
+  - numpy
+  - scikit-learn
+  - scipy
+  - sentence-transformers
+  - tensorflow-hub
+  - pytorch
+  - transformers
+  - pre-commit
+  - nox
+  - pip
+  - pip:
+    - tensorflow_text

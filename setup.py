@@ -1,4 +1,4 @@
-#pylint: disable = line-too-long, trailing-whitespace, trailing-newlines, line-too-long, missing-module-docstring, import-error, too-few-public-methods, too-many-instance-attributes, too-many-locals
+# pylint: disable = line-too-long, trailing-whitespace, trailing-newlines, line-too-long, missing-module-docstring, import-error, too-few-public-methods, too-many-instance-attributes, too-many-locals
 
 from setuptools import setup, find_packages
 
@@ -14,7 +14,7 @@ setup(
         "scipy>=1.7.0",
         "sentence_transformers",
         "faiss-cpu",
-        "tensorflow_text"
+        "tensorflow_text",
     ],
     author="Vladimir Prelovac",
     author_email="vlad@kagi.com",
