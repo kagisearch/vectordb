@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 {
-  "image": "ghcr.io/swarm-io-internal/docker:latest",
+  "image": "ghcr.io/swarm-io-internal/data-science-lite:latest",
 
   "customizations": {
     "vscode": {
