@@ -130,7 +130,7 @@ class Memory:
                 self.memory.append(entry)
 
         if memory_file is not None:
-            Storage(self.memory_file).save_to_disk([{"memory": self.memory, "metadata" :self.metadata_memory}])
+            Storage(memory_file).save_to_disk([{"memory": self.memory, "metadata" :self.metadata_memory}])
 
     def search(
         self, query: str, top_n: int = 5, unique: bool = False, batch_results: str = "flatten"
