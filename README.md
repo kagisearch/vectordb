@@ -1,6 +1,5 @@
 # VectorDB
 
-![Twitter](https://img.shields.io/twitter/follow/KagiHQ?style=social)](https://twitter.com/KagiHQ) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/license/mit/) 
 
 VectorDB is a simple, lightweight, fully local, end-to-end solution for using embeddings-based text retrieval.
 
